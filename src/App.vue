@@ -1,14 +1,17 @@
 <template>
   <div id="app">
     <NaviBar/>
+    <ItemList/>
   </div>
 </template>
 
 <script>
 import NaviBar from "@/components/NaviBar";
+import ItemList from "@/components/ItemList";
 export default {
   name: 'app',
   components: {
+    ItemList,
     NaviBar
   }
 }

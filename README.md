@@ -1,7 +1,7 @@
 # we-share
 Java EE course project  
 
-##Install iView  
+## Install iView  
 ```$xslt
 npm install view-design --save  
 ```
