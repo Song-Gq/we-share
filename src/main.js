@@ -4,7 +4,9 @@ import ViewUI from 'view-design';
 import 'view-design/dist/styles/iview.css';
 
 Vue.config.productionTip = false
-Vue.use(ViewUI);
+Vue.use(ViewUI, {
+/*      size: 'large'*/
+  });
 
 new Vue({
   render: h => h(App),

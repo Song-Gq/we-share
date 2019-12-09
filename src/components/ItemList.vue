@@ -1,23 +1,20 @@
 <template>
     <Scroll :on-reach-bottom="handleReachBottom" :height="avaiHeight">
-        <card style="width:80%; margin: 20px auto">
+        <card style="width:60%; margin: 20px auto">
             <List item-layout="vertical">
-                <ListItem v-for="item in data" :key="item.title">
-                    <ListItemMeta :avatar="item.avatar" :title="item.title" :description="item.description" />
+                <ListItem v-for="item in list" :key="item.title" style="text-align: left">
+                    <ListItemMeta :avatar="item.avatar" :title="item.title" :description="item.topic" />
                     {{ item.content }}
                     <template slot="action">
                         <li>
-                            <Icon type="ios-star-outline" /> 123
+                            <Icon type="ios-eye-outline" /> 浏览量
                         </li>
                         <li>
-                            <Icon type="ios-thumbs-up-outline" /> 234
-                        </li>
-                        <li>
-                            <Icon type="ios-chatbubbles-outline" /> 345
+                            <Icon type="ios-star-outline" /> 收藏量
                         </li>
                     </template>
-                    <template slot="extra">
-                        <img src="https://dev-file.iviewui.com/5wxHCQMUyrauMCGSVEYVxHR5JmvS7DpH/large" style="width: 280px">
+                    <template slot="extra" style="max-height: fit-content">
+                        <img :src="item.pic" style="max-height: 200px">
                     </template>
                 </ListItem>
             </List>
@@ -30,54 +27,41 @@
         name: "ItemList",
         data () {
             return {
-                data: [
+                list: [
                     {
                         title: 'This is title 1',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
+                        topic: 'Topic1 Topic2 Topic3',
+                        avatar: require('../assets/avatar/1.jpg'),
+                        content: 'This is the content, this is the content, this is the content, this is the content.',
+                        pic: require('../assets/pic/1.jpg'),
                     },
                     {
                         title: 'This is title 2',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
+                        topic: 'Topic1 Topic2 Topic3',
+                        avatar: require('../assets/avatar/2.jpg'),
+                        content: 'This is the content, this is the content, this is the content, this is the content.',
+                        pic: require('../assets/pic/2.jpg'),
                     },
                     {
                         title: 'This is title 3',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
+                        topic: 'Topic1 Topic2 Topic3',
+                        avatar: require('../assets/avatar/3.jpg'),
+                        content: 'This is the content, this is the content, this is the content, this is the content.',
+                        pic: require('../assets/pic/3.jpg'),
                     },
                     {
                         title: 'This is title 4',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
+                        topic: 'Topic1 Topic2 Topic3',
+                        avatar: require('../assets/avatar/4.jpg'),
+                        content: 'This is the content, this is the content, this is the content, this is the content.',
+                        pic: require('../assets/pic/4.jpg'),
                     },
                     {
                         title: 'This is title 5',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
-                    },
-                    {
-                        title: 'This is title 6',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
-                    },
-                    {
-                        title: 'This is title 7',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
-                    },
-                    {
-                        title: 'This is title 8',
-                        description: 'This is description, this is description, this is description.',
-                        avatar: 'https://dev-file.iviewui.com/userinfoPDvn9gKWYihR24SpgC319vXY8qniCqj4/avatar',
-                        content: 'This is the content, this is the content, this is the content, this is the content.'
+                        topic: 'Topic1 Topic2 Topic3',
+                        avatar: require('../assets/avatar/5.jpg'),
+                        content: 'This is the content, this is the content, this is the content, this is the content.',
+                        pic: require('../assets/pic/5.jpg'),
                     }
                 ],
                 avaiHeight: 600
@@ -87,9 +71,17 @@
             handleReachBottom () {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        const last = this.list1[this.list1.length - 1];
-                        for (let i = 1; i < 11; i++) {
-                            this.list1.push(last + i);
+                        const last = this.list.length;
+                        var idx;
+                        for (let i = 1; i < 6; i++) {
+                            idx = last + i;
+                            this.list.push({
+                                title: "This is title " + idx,
+                                topic: 'Topic1 Topic2 Topic3',
+                                avatar: require('../assets/avatar/' + idx + '.jpg'),
+                                content: 'This is the content, this is the content, this is the content, this is the content.',
+                                pic: require('../assets/pic/' + idx + '.jpg'),
+                            });
                         }
                         resolve();
                     }, 2000);
