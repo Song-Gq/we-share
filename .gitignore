@@ -19,3 +19,11 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+/babel.config.js
+/package.json
+/package-lock.json
+
+/public/favicon.ico
+/src/assets/logo.png
+/src/components/HelloWorld.vue
