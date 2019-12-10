@@ -6,6 +6,7 @@ import 'view-design/dist/styles/iview.css';
 import Edit from "@/components/Edit";
 import ItemList from "@/components/ItemList";
 import Router from 'vue-router'
+import Posting from "@/components/Posting";
 
 const NotFound = { template: '<p>Page not found</p>' }
 
@@ -14,6 +15,7 @@ const routes = [
     children: [
         { path: 'index', component: ItemList },
         { path: 'edit', component: Edit },
+        { path: 'posting', component: Posting },
         { path: 'search', component: ItemList }
     ]},
     { path: '*', component: NotFound }

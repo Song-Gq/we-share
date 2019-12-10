@@ -4,8 +4,14 @@
             <Tabs :value="tabType">
                 <TabPane label="帖子" name="posting">
                     <List item-layout="vertical">
-                        <ListItem v-for="item in list" :key="item.title" style="text-align: left">
-                            <ListItemMeta :avatar="item.avatar" :title="item.title" :description="item.topic" />
+                        <ListItem v-for="item in list" :key="item.postingId" style="text-align: left">
+                            <ListItemMeta :avatar="item.avatar" :description="item.topic" >
+                                <template slot="title">
+                                    <router-link :to="{path: 'posting', query:{ postingId: item.postingId }}">
+                                        {{ item.title }}
+                                    </router-link>
+                                </template>
+                            </ListItemMeta>
                             {{ item.content }}
                             <template slot="action">
                                 <li>
@@ -39,6 +45,7 @@
             return {
                 list: [
                     {
+                        postingId: 'posting id 1',
                         title: 'This is title 1',
                         topic: 'Topic1 Topic2 Topic3',
                         avatar: require('../assets/avatar/1.jpg'),
@@ -46,6 +53,7 @@
                         pic: require('../assets/pic/1.jpg'),
                     },
                     {
+                        postingId: 'posting id 2',
                         title: 'This is title 2',
                         topic: 'Topic1 Topic2 Topic3',
                         avatar: require('../assets/avatar/2.jpg'),
@@ -53,6 +61,7 @@
                         pic: require('../assets/pic/2.jpg'),
                     },
                     {
+                        postingId: 'posting id 3',
                         title: 'This is title 3',
                         topic: 'Topic1 Topic2 Topic3',
                         avatar: require('../assets/avatar/3.jpg'),
@@ -60,6 +69,7 @@
                         pic: require('../assets/pic/3.jpg'),
                     },
                     {
+                        postingId: 'posting id 4',
                         title: 'This is title 4',
                         topic: 'Topic1 Topic2 Topic3',
                         avatar: require('../assets/avatar/4.jpg'),
@@ -67,6 +77,7 @@
                         pic: require('../assets/pic/4.jpg'),
                     },
                     {
+                        postingId: 'posting id 5',
                         title: 'This is title 5',
                         topic: 'Topic1 Topic2 Topic3',
                         avatar: require('../assets/avatar/5.jpg'),
@@ -93,6 +104,7 @@
                         for (let i = 1; i < 6; i++) {
                             idx = last + i;
                             this.list.push({
+                                postingId: 'posting id ' + idx,
                                 title: "This is title " + idx,
                                 topic: 'Topic1 Topic2 Topic3',
                                 avatar: require('../assets/avatar/' + idx + '.jpg'),
