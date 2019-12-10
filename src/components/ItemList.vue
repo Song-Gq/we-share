@@ -1,5 +1,5 @@
 <template>
-    <Scroll :on-reach-bottom="handleReachBottom" :height="avaiHeight">
+    <Scroll :height="avaiHeight">
         <card style="max-width: 1200px; margin: 20px auto 0 auto; padding: 0 20px">
             <Tabs :value="tabType">
                 <TabPane label="帖子" :disabled="postingTab" name="posting">
@@ -35,6 +35,10 @@
                 </TabPane>
             </Tabs>
         </card>
+        <Button type="primary" :loading="loading" icon="ios-more" @click="toLoading" style="margin: 20px auto">
+            <span v-if="!loading">加载更多</span>
+            <span v-else>Loading...</span>
+        </Button>
     </Scroll>
 </template>
 
@@ -85,7 +89,8 @@
                         pic: require('../assets/pic/5.jpg'),
                     }
                 ],
-                avaiHeight: document.documentElement.clientHeight - 60
+                avaiHeight: document.documentElement.clientHeight - 60,
+                loading: false
             }
         },
         computed: {
@@ -134,6 +139,7 @@
                             });
                         }
                         resolve();
+                        this.loading = false
                     }, 2000);
                 });
             },
@@ -141,6 +147,10 @@
                 this.$nextTick(()=>{
                     this.avaiHeight = document.documentElement.clientHeight - 60
                 })
+            },
+            toLoading(){
+                this.loading = true
+                this.handleReachBottom()
             }
         },
         mounted(){

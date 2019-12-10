@@ -1,7 +1,7 @@
 <template>
     <div style="display: flex; justify-content: space-between">
         <div dir="rtl">
-            <Scroll :on-reach-bottom="handleReachBottom" :height="avaiHeight" style="max-width: 1200px; margin: 0 20px 0 0">
+            <Scroll :height="avaiHeight" style="max-width: 1200px; margin: 0 20px 0 0">
                 <div dir="ltr">
                     <card style="margin-top: 20px; margin-left: 10px; padding: 0 20px">
                         <List item-layout="vertical">
@@ -25,10 +25,14 @@
                             </ListItem>
                         </List>
                     </card>
+                    <Button type="primary" :loading="loading" icon="ios-more" @click="toLoading" style="margin: 20px auto">
+                        <span v-if="!loading">加载更多</span>
+                        <span v-else>Loading...</span>
+                    </Button>
                 </div>
             </Scroll>
         </div>
-        <Scroll :on-reach-bottom="handleReachBottomQlist" :height="avaiHeight" style="max-width: 600px; margin: 0 0 0 20px">
+        <Scroll :height="avaiHeight" style="max-width: 600px; margin: 0 0 0 20px">
             <card style="margin-top: 20px; margin-right: 10px; padding: 0 20px">
                 <List item-layout="vertical">
                     <ListItem :key="postingId" style="text-align: left">
@@ -40,6 +44,10 @@
                     </ListItem>
                 </List>
             </card>
+            <Button type="primary" :loading="loadingQlist" icon="ios-more" @click="toLoadingQlist" style="margin: 20px auto">
+                <span v-if="!loadingQlist">加载更多</span>
+                <span v-else>Loading...</span>
+            </Button>
         </Scroll>
     </div>
 </template>
@@ -114,7 +122,9 @@
                         content: 'This is the question, this is the question, this is the question, this is the question.'
                     }
                 ],
-                avaiHeight: document.documentElement.clientHeight - 60
+                avaiHeight: document.documentElement.clientHeight - 60,
+                loading: false,
+                loadingQlist: false
             }
         },
         computed: {
@@ -138,31 +148,40 @@
                             });
                         }
                         resolve();
+                        this.loading = false
                     }, 2000);
                 });
             },
             handleReachBottomQlist () {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        const last = this.list.length;
+                        const last = this.qlist.length;
                         var idx;
                         for (let i = 1; i < 6; i++) {
                             idx = last + i;
-                            this.list.push({
+                            this.qlist.push({
                                 questionIdx: idx,
                                 time: "This is time " + idx,
                                 content: 'This is the question, this is the question, this is the question, this is the question.'
                             });
                         }
                         resolve();
+                        this.loadingQlist = false
                     }, 2000);
                 });
             },
-
             pageResize(){
                 this.$nextTick(()=>{
                     this.avaiHeight = document.documentElement.clientHeight - 60
                 })
+            },
+            toLoading(){
+                this.loading = true
+                this.handleReachBottom()
+            },
+            toLoadingQlist(){
+                this.loadingQlist = true
+                this.handleReachBottomQlist()
             }
         },
         mounted(){
