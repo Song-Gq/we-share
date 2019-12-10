@@ -1,10 +1,16 @@
 <template>
     <div>
-        <Menu mode="horizontal" :theme="theme" active-name="logo">
-            <MenuItem name="logo">
+<!--        <Menu mode="horizontal" :theme="theme" :active-name="currentPage" @on-select="switchPage">-->
+        <Menu mode="horizontal" :theme="theme">
+            <MenuItem name="logo" to="index">
+<!--                <router-link to="/index">WESHARE</router-link>-->
                 WESHARE
             </MenuItem>
-            <MenuItem name="new-posting">
+            <MenuItem name="new-posting" to="edit">
+<!--                <router-link to="/edit">
+                    <Icon type="ios-paper" />
+                    发布新帖
+                </router-link>-->
                 <Icon type="ios-paper" />
                 发布新帖
             </MenuItem>
@@ -71,11 +77,21 @@
             return {
                 theme: 'light',
                 searchType: 'posting',
-                searchText: ''
+                searchText: '',
+/*                currentPage: 'logo'*/
             }
         },
         methods: {
-
+/*            switchPage(name) {
+                if(name === 'logo') {
+                    this.currentPage = 'logo'
+                    this.$router.push('index')
+                }
+                else if(name === 'new-posting') {
+                    this.currentPage = 'new-posting'
+                    this.$router.push('edit')
+                }
+            }*/
         }
     }
 </script>
