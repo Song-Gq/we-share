@@ -2,7 +2,7 @@
     <div>
         <Input v-model="string" type="textarea" show-word-limit placeholder="Enter here..."
                size="large" :autosize="minRows" autofocus
-               style="display: inline-block; width: 60%; margin-top: 30px" />
+               style="max-width: 1200px; margin: 30px auto 0 auto" />
     </div>
 </template>
 
@@ -13,7 +13,7 @@
             return {
                 string: '',
                 minRows: {
-                    minRows: 20
+                    minRows: 25
                 }
             }
         }

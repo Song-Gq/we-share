@@ -1,31 +1,47 @@
 <template>
-    <Scroll :on-reach-bottom="handleReachBottom" :height="avaiHeight">
-        <card style="width:60%; margin: 20px auto">
-            <List item-layout="vertical">
-                <ListItem :key="postingId" style="text-align: left; display: flex">
-                    <ListItemMeta :avatar="posting.avatar" :title="posting.title" :description="posting.topic" />
-                    <template slot="action">
-                        <li>
-                            <Icon type="ios-eye-outline" /> 关注用户
-                        </li>
-                        <li>
-                            <Icon type="ios-star-outline" /> 收藏帖子
-                        </li>
-                    </template>
-<!--                    <template slot="extra" style="max-height: fit-content">
-                        <img :src="posting.pic" style="max-height: 200px">
-                    </template>-->
-                </ListItem>
-                <ListItem v-for="item in list" :key="item.contentIdx" style="text-align: left">
-                    <ListItemMeta :description="item.time" />
-                    {{ item.content }}
-                    <template slot="extra" style="max-height: fit-content">
-                        <img :src="item.pic" style="max-height: 200px">
-                    </template>
-                </ListItem>
-            </List>
-        </card>
-    </Scroll>
+    <div style="display: flex; justify-content: space-between">
+        <div dir="rtl">
+            <Scroll :on-reach-bottom="handleReachBottom" :height="avaiHeight" style="max-width: 1200px; margin: 0 20px 0 0">
+                <div dir="ltr">
+                    <card style="margin-top: 20px; margin-left: 10px; padding: 0 20px">
+                        <List item-layout="vertical">
+                            <ListItem :key="postingId" style="text-align: left; display: flex">
+                                <ListItemMeta :avatar="posting.avatar" :title="posting.title" :description="posting.topic" />
+                                <template slot="action">
+                                    <li>
+                                        <Icon type="ios-eye-outline" /> 关注用户
+                                    </li>
+                                    <li>
+                                        <Icon type="ios-star-outline" /> 收藏帖子
+                                    </li>
+                                </template>
+                            </ListItem>
+                            <ListItem v-for="item in list" :key="item.contentIdx" style="text-align: left">
+                                <ListItemMeta :description="item.time" />
+                                {{ item.content }}
+                                <template slot="extra" style="max-height: fit-content">
+                                    <img :src="item.pic" style="max-height: 200px">
+                                </template>
+                            </ListItem>
+                        </List>
+                    </card>
+                </div>
+            </Scroll>
+        </div>
+        <Scroll :on-reach-bottom="handleReachBottomQlist" :height="avaiHeight" style="max-width: 600px; margin: 0 0 0 20px">
+            <card style="margin-top: 20px; margin-right: 10px; padding: 0 20px">
+                <List item-layout="vertical">
+                    <ListItem :key="postingId" style="text-align: left">
+                        Q&As
+                    </ListItem>
+                    <ListItem v-for="item in qlist" :key="item.contentIdx" style="text-align: left">
+                        <ListItemMeta :description="item.time" />
+                        {{ item.content }}
+                    </ListItem>
+                </List>
+            </card>
+        </Scroll>
+    </div>
 </template>
 
 <script>
@@ -71,7 +87,34 @@
                         pic: require('../assets/pic/5.jpg'),
                     }
                 ],
-                avaiHeight: 600
+                qlist: [
+                    {
+                        questionIdx: '1',
+                        time: '2019/12/10 14:53:12.00',
+                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                    },
+                    {
+                        questionIdx: '2',
+                        time: '2019/12/10 14:53:13.11',
+                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                    },
+                    {
+                        questionIdx: '3',
+                        time: '2019/12/10 14:53:14.22',
+                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                    },
+                    {
+                        questionIdx: '4',
+                        time: '2019/12/10 14:53:15.33',
+                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                    },
+                    {
+                        questionIdx: '5',
+                        time: '2019/12/10 14:53:16.44',
+                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                    }
+                ],
+                avaiHeight: document.documentElement.clientHeight - 60
             }
         },
         computed: {
@@ -97,7 +140,39 @@
                         resolve();
                     }, 2000);
                 });
+            },
+            handleReachBottomQlist () {
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        const last = this.list.length;
+                        var idx;
+                        for (let i = 1; i < 6; i++) {
+                            idx = last + i;
+                            this.list.push({
+                                questionIdx: idx,
+                                time: "This is time " + idx,
+                                content: 'This is the question, this is the question, this is the question, this is the question.'
+                            });
+                        }
+                        resolve();
+                    }, 2000);
+                });
+            },
+
+            pageResize(){
+                this.$nextTick(()=>{
+                    this.avaiHeight = document.documentElement.clientHeight - 60
+                })
             }
+        },
+        mounted(){
+            let _this = this;
+            window.onresize = ()=>{
+                _this.pageResize();
+            }
+        },
+        destroyed(){
+            window.onresize = null;
         }
     }
 
