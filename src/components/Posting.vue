@@ -9,10 +9,10 @@
                                 <ListItemMeta :avatar="posting.avatar" :title="posting.title" :description="posting.topic" />
                                 <template slot="action">
                                     <li>
-                                        <Icon type="ios-eye-outline" /> 关注用户
+                                        <Icon type="md-add" /> 关注用户
                                     </li>
                                     <li>
-                                        <Icon type="ios-star-outline" /> 收藏帖子
+                                        <Icon type="md-star" /> 收藏帖子
                                     </li>
                                 </template>
                             </ListItem>
@@ -36,7 +36,8 @@
             <card style="margin-top: 20px; margin-right: 10px; padding: 0 20px">
                 <List item-layout="vertical">
                     <ListItem :key="postingId" style="text-align: left">
-                        Q&As
+                        <Icon type="md-help" />
+                        关于此贴的问答
                     </ListItem>
                     <ListItem v-for="item in qlist" :key="item.contentIdx" style="text-align: left">
                         <ListItemMeta :description="item.time" />

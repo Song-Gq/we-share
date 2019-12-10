@@ -15,10 +15,10 @@
                             {{ item.content }}
                             <template slot="action">
                                 <li>
-                                    <Icon type="ios-eye-outline" /> 浏览量
+                                    <Icon type="md-eye" /> 浏览量
                                 </li>
                                 <li>
-                                    <Icon type="ios-star-outline" /> 收藏量
+                                    <Icon type="md-star" /> 收藏量
                                 </li>
                             </template>
                             <template slot="extra" style="max-height: fit-content">

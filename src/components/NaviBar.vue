@@ -5,7 +5,7 @@
                 WESHARE
             </MenuItem>
             <MenuItem name="new-posting" to="edit">
-                <Icon type="ios-paper" />
+                <Icon type="md-paper" />
                 发布新帖
             </MenuItem>
             <MenuItem name="search-bar" style="width: 30%">
@@ -15,13 +15,13 @@
                         <Option value="topic">话题</Option>
                         <Option value="user">用户</Option>
                     </Select>
-                    <Button slot="append" icon="ios-search" @click="search"></Button>
+                    <Button slot="append" icon="md-search" @click="search"></Button>
                 </i-input>
             </MenuItem>
             <MenuItem name="login" style="float: right">
                 <Submenu name="login">
                     <template slot="title">
-                        <Icon type="ios-people" />
+                        <Icon type="md-person" />
                         登录/注册
                     </template>
                     <MenuGroup title="用户账户">
