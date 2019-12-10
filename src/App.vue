@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-<!--    <router-view></router-view>-->
       <NaviBar></NaviBar>
       <router-view></router-view>
   </div>
@@ -8,11 +7,9 @@
 
 <script>
 import NaviBar from "@/components/NaviBar";
-/*import ItemList from "@/components/ItemList";*/
 export default {
   name: 'app',
   components: {
-/*    ItemList,*/
     NaviBar
   }
 }
@@ -25,6 +22,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-/*  margin-top: 60px;*/
 }
 </style>

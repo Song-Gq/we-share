@@ -1,23 +1,33 @@
 <template>
     <Scroll :on-reach-bottom="handleReachBottom" :height="avaiHeight">
         <card style="width:60%; margin: 20px auto">
-            <List item-layout="vertical">
-                <ListItem v-for="item in list" :key="item.title" style="text-align: left">
-                    <ListItemMeta :avatar="item.avatar" :title="item.title" :description="item.topic" />
-                    {{ item.content }}
-                    <template slot="action">
-                        <li>
-                            <Icon type="ios-eye-outline" /> 浏览量
-                        </li>
-                        <li>
-                            <Icon type="ios-star-outline" /> 收藏量
-                        </li>
-                    </template>
-                    <template slot="extra" style="max-height: fit-content">
-                        <img :src="item.pic" style="max-height: 200px">
-                    </template>
-                </ListItem>
-            </List>
+            <Tabs :value="tabType">
+                <TabPane label="帖子" name="posting">
+                    <List item-layout="vertical">
+                        <ListItem v-for="item in list" :key="item.title" style="text-align: left">
+                            <ListItemMeta :avatar="item.avatar" :title="item.title" :description="item.topic" />
+                            {{ item.content }}
+                            <template slot="action">
+                                <li>
+                                    <Icon type="ios-eye-outline" /> 浏览量
+                                </li>
+                                <li>
+                                    <Icon type="ios-star-outline" /> 收藏量
+                                </li>
+                            </template>
+                            <template slot="extra" style="max-height: fit-content">
+                                <img :src="item.pic" style="max-height: 200px">
+                            </template>
+                        </ListItem>
+                    </List>
+                </TabPane>
+                <TabPane label="话题" name="topic">
+
+                </TabPane>
+                <TabPane label="用户" disabled name="user">
+
+                </TabPane>
+            </Tabs>
         </card>
     </Scroll>
 </template>
@@ -67,6 +77,13 @@
                 avaiHeight: 600
             }
         },
+        computed: {
+            tabType: function () {
+                if(this.$route.query.type === undefined)
+                    return "posting"
+                return this.$route.query.type
+            }
+        },
         methods: {
             handleReachBottom () {
                 return new Promise(resolve => {
@@ -90,36 +107,6 @@
         }
     }
 </script>
-
-<!--<template>
-    <Scroll :on-reach-bottom="handleReachBottom">
-        <Card dis-hover v-for="(item, index) in list1" :key="index" style="margin: 32px 0">
-            Content {{ item }}
-        </Card>
-    </Scroll>
-</template>-->
-<!--<script>
-    export default {
-        data () {
-            return {
-                list1: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-            }
-        },
-        methods: {
-            handleReachBottom () {
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        const last = this.list1[this.list1.length - 1];
-                        for (let i = 1; i < 11; i++) {
-                            this.list1.push(last + i);
-                        }
-                        resolve();
-                    }, 2000);
-                });
-            }
-        }
-    }
-</script>-->
 
 <style scoped>
 

@@ -2,7 +2,7 @@
     <div>
         <Input v-model="string" type="textarea" show-word-limit placeholder="Enter here..."
                size="large" :autosize="minRows" autofocus
-               style="display: inline-block; width: 60%; margin-top: 20px" />
+               style="display: inline-block; width: 60%; margin-top: 30px" />
     </div>
 </template>
 
