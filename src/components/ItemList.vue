@@ -1,8 +1,8 @@
 <template>
     <Scroll :on-reach-bottom="handleReachBottom" :height="avaiHeight">
-        <card style="width:60%; margin: 20px auto">
+        <card style="max-width: 1200px; margin: 20px auto 0 auto; padding: 0 20px">
             <Tabs :value="tabType">
-                <TabPane label="帖子" name="posting">
+                <TabPane label="帖子" :disabled="postingTab" name="posting">
                     <List item-layout="vertical">
                         <ListItem v-for="item in list" :key="item.postingId" style="text-align: left">
                             <ListItemMeta :avatar="item.avatar" :description="item.topic" >
@@ -27,10 +27,10 @@
                         </ListItem>
                     </List>
                 </TabPane>
-                <TabPane label="话题" name="topic">
+                <TabPane label="话题" :disabled="topicTab" name="topic">
 
                 </TabPane>
-                <TabPane label="用户" disabled name="user">
+                <TabPane label="用户" :disabled="userTab" name="user">
 
                 </TabPane>
             </Tabs>
@@ -85,7 +85,7 @@
                         pic: require('../assets/pic/5.jpg'),
                     }
                 ],
-                avaiHeight: 600
+                avaiHeight: document.documentElement.clientHeight - 60
             }
         },
         computed: {
@@ -93,7 +93,28 @@
                 if(this.$route.query.type === undefined)
                     return "posting"
                 return this.$route.query.type
+            },
+            postingTab: function () {
+                if(this.$route.query.type === "posting" || this.$route.query.type === undefined) {
+                    return false;
+                }
+                return true;
+            },
+            topicTab: function () {
+                if(this.$route.query.type === "topic" || this.$route.query.type === undefined) {
+                    return false;
+                }
+                return true;
+            },
+            userTab: function () {
+                if(this.$route.query.type === "user") {
+                    return false;
+                }
+                return true;
             }
+/*            avaiHeight: function () {
+                return document.documentElement.clientHeight - 60
+            }*/
         },
         methods: {
             handleReachBottom () {
@@ -115,7 +136,21 @@
                         resolve();
                     }, 2000);
                 });
+            },
+            pageResize(){
+                this.$nextTick(()=>{
+                    this.avaiHeight = document.documentElement.clientHeight - 60
+                })
             }
+        },
+        mounted(){
+            let _this = this;
+            window.onresize = ()=>{
+                _this.pageResize();
+            }
+        },
+        destroyed(){
+            window.onresize = null;
         }
     }
 </script>
