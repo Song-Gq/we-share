@@ -1,18 +1,18 @@
 <template>
     <div style="display: flex; justify-content: space-between">
         <div dir="rtl">
-            <Scroll :on-reach-bottom="handleReachBottom" :height="avaiHeight" style="max-width: 1200px; margin: 0 20px 0 0">
+            <Scroll :height="avaiHeight" style="max-width: 1200px; margin: 0 20px 0 0">
                 <div dir="ltr">
-                    <card style="margin-top: 20px; margin-left: 10px; padding: 0 20px">
+                    <card style="margin-top: 20px; margin-left: 50px; padding: 0 20px">
                         <List item-layout="vertical">
                             <ListItem :key="postingId" style="text-align: left; display: flex">
                                 <ListItemMeta :avatar="posting.avatar" :title="posting.title" :description="posting.topic" />
                                 <template slot="action">
                                     <li>
-                                        <Icon type="ios-eye-outline" /> 关注用户
+                                        <Icon type="md-add" /> 关注用户
                                     </li>
                                     <li>
-                                        <Icon type="ios-star-outline" /> 收藏帖子
+                                        <Icon type="md-star" /> 收藏帖子
                                     </li>
                                 </template>
                             </ListItem>
@@ -25,22 +25,43 @@
                             </ListItem>
                         </List>
                     </card>
+                    <Button type="primary" :loading="loading" icon="ios-more" @click="toLoading"
+                            shape="circle" style="margin: 20px auto">
+                        <span v-if="!loading">加载更多</span>
+                        <span v-else>Loading...</span>
+                    </Button>
                 </div>
             </Scroll>
         </div>
-        <Scroll :on-reach-bottom="handleReachBottomQlist" :height="avaiHeight" style="max-width: 600px; margin: 0 0 0 20px">
-            <card style="margin-top: 20px; margin-right: 10px; padding: 0 20px">
-                <List item-layout="vertical">
-                    <ListItem :key="postingId" style="text-align: left">
-                        Q&As
-                    </ListItem>
+        <router-view></router-view>
+<!--        <Scroll :height="avaiHeight" style="max-width: 600px; margin: 0 0 0 20px">
+            <card title="关于此贴的问答" icon="md-help" style="margin-top: 20px; margin-right: 10px; padding: 0 20px">
+                <Timeline>
+                    <TimelineItem v-for="item in qlist" :key="item.questionIdx" style="text-align: left;">
+                        <router-link to="">
+                            <p class="question">{{item.content}}</p>
+                        </router-link>
+                        &lt;!&ndash;<a :href="item.content"><p class="questioner">{{item.questionerId}}</p></a>&ndash;&gt;
+                        <p class="questioner">{{item.questionerId}}</p>
+                    </TimelineItem>
+                </Timeline>
+&lt;!&ndash;                <List item-layout="vertical">
+&lt;!&ndash;                    <ListItem :key="postingId" style="text-align: left">
+                        <Icon type="md-help" />
+                        关于此贴的问答
+                    </ListItem>&ndash;&gt;
                     <ListItem v-for="item in qlist" :key="item.contentIdx" style="text-align: left">
                         <ListItemMeta :description="item.time" />
                         {{ item.content }}
                     </ListItem>
-                </List>
+                </List>&ndash;&gt;
             </card>
-        </Scroll>
+            <Button type="primary" :loading="loadingQlist" icon="ios-more" @click="toLoadingQlist"
+                    shape="circle" style="margin: 20px auto">
+                <span v-if="!loadingQlist">加载更多</span>
+                <span v-else>Loading...</span>
+            </Button>
+        </Scroll>-->
     </div>
 </template>
 
@@ -87,34 +108,41 @@
                         pic: require('../assets/pic/5.jpg'),
                     }
                 ],
-                qlist: [
+/*                qlist: [
                     {
                         questionIdx: '1',
                         time: '2019/12/10 14:53:12.00',
-                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                        content: 'This is the question, this is the question, this is the question, this is the question.',
+                        questionerId: 'q id 1'
                     },
                     {
                         questionIdx: '2',
                         time: '2019/12/10 14:53:13.11',
-                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                        content: 'This is the question, this is the question, this is the question, this is the question.',
+                        questionerId: 'q id 2'
                     },
                     {
                         questionIdx: '3',
                         time: '2019/12/10 14:53:14.22',
-                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                        content: 'This is the question, this is the question, this is the question, this is the question.',
+                        questionerId: 'q id 3'
                     },
                     {
                         questionIdx: '4',
                         time: '2019/12/10 14:53:15.33',
-                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                        content: 'This is the question, this is the question, this is the question, this is the question.',
+                        questionerId: 'q id 4'
                     },
                     {
                         questionIdx: '5',
                         time: '2019/12/10 14:53:16.44',
-                        content: 'This is the question, this is the question, this is the question, this is the question.'
+                        content: 'This is the question, this is the question, this is the question, this is the question.',
+                        questionerId: 'q id 5'
                     }
-                ],
-                avaiHeight: document.documentElement.clientHeight - 60
+                ],*/
+                avaiHeight: document.documentElement.clientHeight - 60,
+                loading: false,
+/*                loadingQlist: false*/
             }
         },
         computed: {
@@ -138,37 +166,56 @@
                             });
                         }
                         resolve();
+                        this.loading = false
                     }, 2000);
                 });
             },
-            handleReachBottomQlist () {
+/*            handleReachBottomQlist () {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        const last = this.list.length;
+                        const last = this.qlist.length;
                         var idx;
                         for (let i = 1; i < 6; i++) {
                             idx = last + i;
-                            this.list.push({
+                            this.qlist.push({
                                 questionIdx: idx,
                                 time: "This is time " + idx,
-                                content: 'This is the question, this is the question, this is the question, this is the question.'
+                                content: 'This is the question, this is the question, this is the question, this is the question.',
+                                questionerId: 'q id ' + idx
                             });
                         }
                         resolve();
+                        this.loadingQlist = false
                     }, 2000);
                 });
-            },
-
+            },*/
             pageResize(){
                 this.$nextTick(()=>{
                     this.avaiHeight = document.documentElement.clientHeight - 60
                 })
-            }
+            },
+            toLoading(){
+                this.loading = true
+                this.handleReachBottom()
+            },
+/*            toLoadingQlist(){
+                this.loadingQlist = true
+                this.handleReachBottomQlist()
+            }*/
         },
         mounted(){
             let _this = this;
-            window.onresize = ()=>{
-                _this.pageResize();
+            if(window.onresize !== null) {
+                var oldOnresize = window.onresize;
+                window.onresize = ()=> {
+                    oldOnresize();
+                    _this.pageResize()
+                }
+            }
+            else {
+                window.onresize = ()=>{
+                    _this.pageResize();
+                }
             }
         },
         destroyed(){

@@ -10,20 +10,27 @@ import Posting from "@/components/Posting";
 import Login from "@/components/Login";
 import Register from "@/components/Register";
 import PersonalPage from "@/components/PersonalPage";
+import Question from "@/components/Question";
+import Answer from "@/components/Answer";
 
 const NotFound = { template: '<p>Page not found</p>' }
 
 const routes = [
     { path: '/', component: App, redirect: 'index',
-        children: [
-            { path: 'index', component: ItemList },
-            { path: 'edit', component: Edit },
-            { path: 'posting', component: Posting },
-            { path: 'search', component: ItemList },
-            {path:'login',component:Login},
-            {path:'register',component:Register},
-            {path:'personalPage',component:PersonalPage}
-        ]},
+    children: [
+        { path: 'index', component: ItemList },
+        { path: 'edit', component: Edit },
+        { path: 'posting', component: Posting, redirect: 'posting/question',
+            children: [
+                { path: 'question', component: Question },
+                { path: 'answer', component: Answer }
+            ]
+        },
+        { path: 'login', component: Login },
+        { path: 'register', component: Register },
+        { path: 'personalPage', component: PersonalPage }
+        { path: 'search', component: ItemList }
+    ]},
     { path: '*', component: NotFound }
 ]
 
