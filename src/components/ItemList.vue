@@ -35,7 +35,8 @@
                 </TabPane>
             </Tabs>
         </card>
-        <Button type="primary" :loading="loading" icon="ios-more" @click="toLoading" style="margin: 20px auto">
+        <Button type="primary" :loading="loading" icon="ios-more" @click="toLoading"
+                shape="circle" style="margin: 20px auto">
             <span v-if="!loading">加载更多</span>
             <span v-else>Loading...</span>
         </Button>

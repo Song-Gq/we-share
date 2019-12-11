@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="position: relative; z-index: 1">
         <Menu mode="horizontal" :theme="theme">
             <MenuItem name="logo" to="index">
                 WESHARE
@@ -9,7 +9,7 @@
                 发布新帖
             </MenuItem>
             <MenuItem name="search-bar" style="width: 30%">
-                <i-input :value="searchText" style="margin-top: 14px" @on-enter="search">
+                <i-input v-model="searchText" style="margin-top: 14px" @on-enter="search">
                     <Select v-model="searchType" slot="prepend" style="width: 80px">
                         <Option value="posting">帖子</Option>
                         <Option value="topic">话题</Option>
@@ -44,19 +44,26 @@
         data () {
             return {
                 theme: 'light',
-                searchType: 'posting'
+                searchType: 'posting',
+                searchTextData: ''
             }
         },
         computed: {
-            searchText: function () {
-                if(this.$route.query.text === undefined)
-                    return ""
-                return this.$route.query.text
+            searchText: {
+                get() {
+                    if(this.$route.query.text === undefined)
+                        return ""
+                    return this.$route.query.text
+                },
+                set(val) {
+                    this.searchTextData = val
+                }
             }
         },
         methods: {
             search() {
-                this.$router.push({path: 'search', query:{ type: this.searchType, text: this.searchText }})
+                if(this.searchTextData !== "")
+                    this.$router.push({path: 'search', query:{ type: this.searchType, text: this.searchTextData }})
             }
         }
     }
