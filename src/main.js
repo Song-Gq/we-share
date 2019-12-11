@@ -9,6 +9,7 @@ import Router from 'vue-router'
 import Posting from "@/components/Posting";
 import Login from "@/components/Login";
 import Register from "@/components/Register";
+import PersonalPage from "@/components/PersonalPage";
 
 const NotFound = { template: '<p>Page not found</p>' }
 
@@ -20,7 +21,8 @@ const routes = [
             { path: 'posting', component: Posting },
             { path: 'search', component: ItemList },
             {path:'login',component:Login},
-            {path:'register',component:Register}
+            {path:'register',component:Register},
+            {path:'personalPage',component:PersonalPage}
         ]},
     { path: '*', component: NotFound }
 ]

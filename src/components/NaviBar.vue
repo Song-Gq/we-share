@@ -28,7 +28,7 @@
                         <MenuItem name="search-posting" to="login">
                             登录
                         </MenuItem>
-                        <MenuItem name="search-topic" to="register">
+                        <MenuItem name="search-topic" to="personalPage">
                             注册
                         </MenuItem>
                     </MenuGroup>
