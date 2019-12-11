@@ -1,14 +1,14 @@
 <template>
     <div style="position: relative; z-index: 1">
-        <Menu mode="horizontal" :theme="theme">
-            <MenuItem name="logo" to="/index">
+        <Menu mode="horizontal" :theme="theme" @on-select="outFocus" :active-name="active" ref="menu">
+            <MenuItem name="index" to="/index">
                 WESHARE
             </MenuItem>
-            <MenuItem name="new-posting" to="/edit">
+            <MenuItem name="edit" to="/edit">
                 <Icon type="md-paper" />
                 发布新帖
             </MenuItem>
-            <MenuItem name="search-bar" style="width: 30%">
+            <MenuItem name="search" style="width: 30%">
                 <i-input v-model="searchText" style="margin-top: 14px" @on-enter="search">
                     <Select v-model="searchType" slot="prepend" style="width: 80px">
                         <Option value="posting">帖子</Option>
@@ -25,10 +25,10 @@
                         登录/注册
                     </template>
                     <MenuGroup title="用户账户">
-                        <MenuItem name="search-posting">
+                        <MenuItem name="login">
                             登录
                         </MenuItem>
-                        <MenuItem name="search-topic">
+                        <MenuItem name="register">
                             注册
                         </MenuItem>
                     </MenuGroup>
@@ -45,15 +45,19 @@
             return {
                 theme: 'light',
                 searchType: 'posting',
-                searchTextData: ''
+                searchTextData: '',
+                active: 'logo'
             }
         },
         computed: {
             searchText: {
                 get() {
-                    if(this.$route.query.text === undefined)
+                    if (this.$route.query.text !== undefined)
+                        return this.$route.query.text
+                    else if(this.searchTextData !== "")
+                        return this.searchTextData
+                    else
                         return ""
-                    return this.$route.query.text
                 },
                 set(val) {
                     this.searchTextData = val
@@ -62,9 +66,31 @@
         },
         methods: {
             search() {
+/*                window.console.log('textdata' + this.searchTextData)
                 if(this.searchTextData !== "")
+                    this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchTextData }})*/
+                if(this.searchTextData !== "" && this.searchTextData !== undefined)
                     this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchTextData }})
+                else if (this.searchText !== undefined && this.searchText !== "")
+                    this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchText }})
+            },
+            outFocus(name) {
+                this.$nextTick(() => {
+                    this.active = this.$route.path.substr(1).split('/')[0]
+                    this.$refs.menu.updateActiveName()
+
+                    if(name === 'search' && this.$route.path.substr(1).split('/')[0] !== 'search') {
+                        this.active = 'logo'
+                        this.$refs.menu.updateActiveName()
+                    }
+                })
             }
+        },
+        mounted() {
+            this.$nextTick(()=>{
+                this.active = this.$route.path.substr(1).split('/')[0]
+                this.$refs.menu.updateActiveName()
+            })
         }
     }
 </script>

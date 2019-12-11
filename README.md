@@ -19,6 +19,12 @@ npm install view-design --save
 ```
 see https://www.iviewui.com/  
 
+## Todo  
+* 使用axios通信  
+* 搜索用户结果  
+* 帖子标签的显示  
+* 登陆后界面的变化  
+
 ## Commit History  
 * 12/9  
   * 创建基于vue.js的WebStorm项目，部分文件未引入  
@@ -48,6 +54,10 @@ see https://www.iviewui.com/
     修改问题列表样式  
     新增回答组件  
     更正了部分路由逻辑  
+  * 优化了菜单和首页标签页逻辑  
+    新增标签搜索结果  
+    优化了搜索栏逻辑  
+    修正了加载更多逻辑  
 
 ## Project setup
 ```
