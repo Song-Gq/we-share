@@ -4,7 +4,7 @@
             <h2>登录</h2>
             <Form ref="loginData" :model="loginData" :rules="ruleValidate" :label-width="80">
                 <FormItem label="Account" prop="account">
-                    <Input type="text" v-model="loginData.account" placeholder="请输入账号"/>
+                    <Input type="email" v-model="loginData.account" placeholder="请输入账号"/>
                 </FormItem>
                 <FormItem label="Password" prop="password">
                     <Input type="password" v-model="loginData.password" placeholder="请输入密码"/>
@@ -31,7 +31,7 @@
                 ruleValidate: {
                     account: [
                         { required: true, message: '账号不能为空', trigger: 'blur' },
-                        { min: 3, max: 16, message: '账号长度3-16个字符', trigger: 'blur' }
+                        { type: 'email', message: '邮箱格式错误', trigger: 'blur' }
                     ],
                     password: [
                         { required: true, message: '密码不能为空', trigger: 'blur' },

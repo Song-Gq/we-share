@@ -4,10 +4,14 @@
             <h2>注册</h2>
             <Form ref="registerData" :model="registerData" :rules="ruleValidate" :label-width="80">
                 <FormItem label="Account" prop="account">
-                    <Input type="text" v-model="registerData.account" placeholder="请输入账号"/>
+                    <label>
+                        <Input type="email" v-model="registerData.account"  placeholder="请输入账号"/>
+                    </label>
                 </FormItem>
                 <FormItem label="Password" prop="password">
-                    <Input type="password" v-model="registerData.password" placeholder="请输入密码"/>
+                    <label>
+                        <Input type="password" v-model="registerData.password" placeholder="请输入密码"/>
+                    </label>
                 </FormItem>
                 <FormItem class="form-footer">
                     <Button type="primary" @click="handleSubmit('registerData')">Submit</Button>
@@ -31,7 +35,7 @@
                 ruleValidate: {
                     account: [
                         { required: true, message: '账号不能为空', trigger: 'blur' },
-                        { min: 3, max: 16, message: '账号长度3-16个字符', trigger: 'blur' }
+                        { type: 'email', message: '邮箱格式错误', trigger: 'blur' }
                     ],
                     password: [
                         { required: true, message: '密码不能为空', trigger: 'blur' },
@@ -44,7 +48,7 @@
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('注册成功!');
+                        this.$Message.success('注册成功!')
                         /**/
                         this.$router.push({path:"index"})
                     } else {
@@ -53,10 +57,11 @@
                 })
             },
             handleReset (name) {
-                this.$refs[name].resetFields();
+                this.$refs[name].resetFields()
             }
         }
     }
+
 </script>
 
 <style >
