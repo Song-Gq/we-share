@@ -1,2 +1,2 @@
 # we-share
-java ee course project
+a web community based on value and interest  
