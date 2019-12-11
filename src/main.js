@@ -7,6 +7,9 @@ import Edit from "@/components/Edit";
 import ItemList from "@/components/ItemList";
 import Router from 'vue-router'
 import Posting from "@/components/Posting";
+import Login from "@/components/Login";
+import Register from "@/components/Register";
+import PersonalPage from "@/components/PersonalPage";
 import Question from "@/components/Question";
 import Answer from "@/components/Answer";
 
@@ -23,6 +26,9 @@ const routes = [
                 { path: 'answer', component: Answer }
             ]
         },
+        { path: 'login', component: Login },
+        { path: 'register', component: Register },
+        { path: 'personalPage', component: PersonalPage }
         { path: 'search', component: ItemList }
     ]},
     { path: '*', component: NotFound }
@@ -40,7 +46,7 @@ Router.prototype.push = function push(location, onResolve, onReject) {
 
 Vue.config.productionTip = false
 Vue.use(ViewUI, {
-  });
+});
 Vue.use(VueRouter);
 
 new Vue({
