@@ -1,10 +1,10 @@
 <template>
     <div style="position: relative; z-index: 1">
         <Menu mode="horizontal" :theme="theme">
-            <MenuItem name="logo" to="index">
+            <MenuItem name="logo" to="/index">
                 WESHARE
             </MenuItem>
-            <MenuItem name="new-posting" to="edit">
+            <MenuItem name="new-posting" to="/edit">
                 <Icon type="md-paper" />
                 发布新帖
             </MenuItem>
@@ -63,7 +63,7 @@
         methods: {
             search() {
                 if(this.searchTextData !== "")
-                    this.$router.push({path: 'search', query:{ type: this.searchType, text: this.searchTextData }})
+                    this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchTextData }})
             }
         }
     }

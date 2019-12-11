@@ -7,6 +7,8 @@ import Edit from "@/components/Edit";
 import ItemList from "@/components/ItemList";
 import Router from 'vue-router'
 import Posting from "@/components/Posting";
+import Question from "@/components/Question";
+import Answer from "@/components/Answer";
 
 const NotFound = { template: '<p>Page not found</p>' }
 
@@ -15,7 +17,12 @@ const routes = [
     children: [
         { path: 'index', component: ItemList },
         { path: 'edit', component: Edit },
-        { path: 'posting', component: Posting },
+        { path: 'posting', component: Posting, redirect: 'posting/question',
+            children: [
+                { path: 'question', component: Question },
+                { path: 'answer', component: Answer }
+            ]
+        },
         { path: 'search', component: ItemList }
     ]},
     { path: '*', component: NotFound }

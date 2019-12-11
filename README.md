@@ -1,5 +1,9 @@
 # we-share
-Java EE course project  
+
+## Install axios  
+```$xslt
+npm install axios --save-dev  
+```
 
 ## Install Mavon Editor  
 ```$xslt
@@ -39,6 +43,11 @@ see https://www.iviewui.com/
   * 编辑器不再遮挡导航栏登录的次级菜单了  
     优化和修正了搜索逻辑  
     修改了部分按钮样式  
+  * 准备使用axios  
+    将帖子页面的问题列表拆分成单独的组件  
+    修改问题列表样式  
+    新增回答组件  
+    更正了部分路由逻辑  
 
 ## Project setup
 ```
