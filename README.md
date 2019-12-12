@@ -58,6 +58,11 @@ see https://www.iviewui.com/
     新增标签搜索结果  
     优化了搜索栏逻辑  
     修正了加载更多逻辑  
+  * merge from zdy
+* 12/12  
+  * 优化了搜索和标签页逻辑  
+    新增用户搜索结果列表  
+    编辑页面新增标题和话题域及检查机制  
 
 ## Project setup
 ```

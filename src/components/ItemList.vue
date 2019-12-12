@@ -7,7 +7,12 @@
                         <ListItem v-for="item in list" :key="item.postingId" style="text-align: left">
                             <ListItemMeta :avatar="item.avatar" >
                                 <template slot="description">
-                                    <tag color="blue">{{item.topic}}</tag>
+                                    <router-link v-for="topic in item.topic" :key="topic"
+                                                 :to="{path: '/search', query:{ type: 'postingbytag', text: topic }}">
+                                        <tag color="blue" >
+                                            {{topic}}
+                                        </tag>
+                                    </router-link>
                                 </template>
                                 <template slot="title">
                                     <router-link :to="{path: 'posting', query:{ postingId: item.postingId }}">
@@ -35,7 +40,7 @@
 <!--                        <Card icon="md-pricetag" :padding="0" style="width: 300px; margin: 0 auto">-->
                             <CellGroup v-for="item in tlist" :key="item.tagId" style="padding: 5px">
                                 <Cell :title="item.tagName" extra="搜索该话题下的帖子"
-                                      :to="{path: '/search', query:{ type: 'posting', text: item.tagName }}" />
+                                      :to="{path: '/search', query:{ type: 'postingbytag', text: item.tagName }}" />
                             </CellGroup>
 <!--                        </Card>-->
                     </div>
@@ -87,7 +92,19 @@
 -->
                 </TabPane>
                 <TabPane :label="popularUser" :disabled="userTab" name="user">
-
+                    <div style="text-align: left">
+                        <CellGroup v-for="item in ulist" :key="item.userId" style="padding: 5px">
+                            <Cell :to="{path: '/personalpage', query:{ userid: item.userId }}" >
+                                <avatar :src="item.avatar" />
+                                <template>
+                                    {{item.userName}}
+                                </template>
+                                <template slot="label">
+                                    用户ID: {{item.userId}}
+                                </template>
+                            </Cell>
+                        </CellGroup>
+                    </div>
                 </TabPane>
             </Tabs>
         </card>
@@ -108,7 +125,7 @@
                     {
                         postingId: 'posting id 1',
                         title: 'This is title 1',
-                        topic: 'Topic1 Topic2 Topic3',
+                        topic: [ 'Topic1', 'Topic2', 'Topic3' ],
                         avatar: require('../assets/avatar/1.jpg'),
                         content: 'This is the content, this is the content, this is the content, this is the content.',
                         pic: require('../assets/pic/1.jpg'),
@@ -116,7 +133,7 @@
                     {
                         postingId: 'posting id 2',
                         title: 'This is title 2',
-                        topic: 'Topic1 Topic2 Topic3',
+                        topic: [ 'Topic1', 'Topic2', 'Topic3' ],
                         avatar: require('../assets/avatar/2.jpg'),
                         content: 'This is the content, this is the content, this is the content, this is the content.',
                         pic: require('../assets/pic/2.jpg'),
@@ -124,7 +141,7 @@
                     {
                         postingId: 'posting id 3',
                         title: 'This is title 3',
-                        topic: 'Topic1 Topic2 Topic3',
+                        topic: [ 'Topic1', 'Topic2', 'Topic3' ],
                         avatar: require('../assets/avatar/3.jpg'),
                         content: 'This is the content, this is the content, this is the content, this is the content.',
                         pic: require('../assets/pic/3.jpg'),
@@ -132,7 +149,7 @@
                     {
                         postingId: 'posting id 4',
                         title: 'This is title 4',
-                        topic: 'Topic1 Topic2 Topic3',
+                        topic: [ 'Topic1', 'Topic2', 'Topic3' ],
                         avatar: require('../assets/avatar/4.jpg'),
                         content: 'This is the content, this is the content, this is the content, this is the content.',
                         pic: require('../assets/pic/4.jpg'),
@@ -140,7 +157,7 @@
                     {
                         postingId: 'posting id 5',
                         title: 'This is title 5',
-                        topic: 'Topic1 Topic2 Topic3',
+                        topic: [ 'Topic1', 'Topic2', 'Topic3' ],
                         avatar: require('../assets/avatar/5.jpg'),
                         content: 'This is the content, this is the content, this is the content, this is the content.',
                         pic: require('../assets/pic/5.jpg'),
@@ -154,30 +171,90 @@
                     {
                         tagName: 'tag11111111111',
                         tagId: '2'
-                    },                    {
+                    },
+                    {
                         tagName: 'tag11122222222222211111111',
                         tagId: '3'
-                    },                    {
+                    },
+                    {
                         tagName: 'tag11113331111111',
                         tagId: '4'
-                    },                    {
+                    },
+                    {
                         tagName: 'tag111444444444411111111',
                         tagId: '5'
-                    },                    {
+                    },
+                    {
                         tagName: 'tag111155555555555555555555555551111111',
                         tagId: '6'
-                    },                    {
+                    },
+                    {
                         tagName: 'tag11111111111',
                         tagId: '7'
-                    },                    {
+                    },
+                    {
                         tagName: 'tag11111111111',
                         tagId: '8'
-                    },                    {
+                    },
+                    {
                         tagName: 'tag11111111111',
                         tagId: '9'
-                    },                    {
+                    },
+                    {
                         tagName: 'tag11111111111',
                         tagId: '10'
+                    },
+                ],
+                ulist: [
+                    {
+                        userName: 'user11111111111',
+                        userId: '1',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user11111111111',
+                        userId: '2',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user11122222222222211111111',
+                        userId: '3',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user11113331111111',
+                        userId: '4',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user111444444444411111111',
+                        userId: '5',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user111155555555555555555555555551111111',
+                        userId: '6',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user11111111111',
+                        userId: '7',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user11111111111',
+                        userId: '8',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user11111111111',
+                        userId: '9',
+                        avatar: require('../assets/avatar/4.jpg')
+                    },
+                    {
+                        userName: 'user11111111111',
+                        userId: '10',
+                        avatar: require('../assets/avatar/4.jpg')
                     },
                 ],
                 avaiHeight: document.documentElement.clientHeight - 60,
@@ -189,6 +266,8 @@
             tabType: {
                 get() {
                     this.pageResize()
+                    if(this.$route.query.type === "postingbytag" || this.tabTypeData === 'postingbytag')
+                        return "posting"
                     if(this.$route.query.type !== undefined)
                         return this.$route.query.type
                     else if (this.tabTypeData !== '' && this.tabTypeData !== 'user')
@@ -200,7 +279,9 @@
                 }
             },
             postingTab: function () {
-                if(this.$route.query.type === "posting" || this.$route.query.type === undefined) {
+                if(this.$route.query.type === "posting"
+                    || this.$route.query.type === undefined
+                    || this.$route.query.type === "postingbytag" ) {
                     return false;
                 }
                 return true;
@@ -220,6 +301,8 @@
             popularPosting: function () {
                 if(this.$route.query.type === undefined)
                     return "热门帖子"
+                else if (this.$route.query.type === "postingbytag")
+                    return "话题下帖子的搜索结果"
                 return "帖子的搜索结果"
             },
             popularTopic: function () {
@@ -248,7 +331,7 @@
                                 this.list.push({
                                     postingId: 'posting id ' + idx,
                                     title: "This is title " + idx,
-                                    topic: 'Topic1 Topic2 Topic3',
+                                    topic: [ 'Topic1', 'Topic2', 'Topic3' ],
                                     avatar: require('../assets/avatar/' + idx + '.jpg'),
                                     content: 'This is the content, this is the content, this is the content, this is the content.',
                                     pic: require('../assets/pic/' + idx + '.jpg'),
@@ -261,8 +344,10 @@
                                 });
                             }
                             else if (this.tabType === 'user') {
-                                this.list.push({
-
+                                this.ulist.push({
+                                    userName: 'newusername' + idx,
+                                    userId: 'newuserid' + idx,
+                                    avatar: require('../assets/avatar/' + idx + '.jpg')
                                 });
                             }
                         }

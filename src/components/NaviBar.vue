@@ -25,10 +25,10 @@
                         登录/注册
                     </template>
                     <MenuGroup title="用户账户">
-                        <MenuItem name="login">
+                        <MenuItem name="login" to="login">
                             登录
                         </MenuItem>
-                        <MenuItem name="register">
+                        <MenuItem name="register" to="register">
                             注册
                         </MenuItem>
                     </MenuGroup>
@@ -69,10 +69,10 @@
 /*                window.console.log('textdata' + this.searchTextData)
                 if(this.searchTextData !== "")
                     this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchTextData }})*/
-                if(this.searchTextData !== "" && this.searchTextData !== undefined)
-                    this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchTextData }})
-                else if (this.searchText !== undefined && this.searchText !== "")
+                if (this.searchText !== undefined && this.searchText !== "")
                     this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchText }})
+                else if(this.searchTextData !== "" && this.searchTextData !== undefined)
+                    this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchTextData }})
             },
             outFocus(name) {
                 this.$nextTick(() => {

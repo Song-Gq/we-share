@@ -28,7 +28,7 @@ const routes = [
         },
         { path: 'login', component: Login },
         { path: 'register', component: Register },
-        { path: 'personalPage', component: PersonalPage }
+        { path: 'personalPage', component: PersonalPage },
         { path: 'search', component: ItemList }
     ]},
     { path: '*', component: NotFound }
