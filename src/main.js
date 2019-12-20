@@ -12,6 +12,8 @@ import Register from "@/components/Register";
 import PersonalPage from "@/components/PersonalPage";
 import Question from "@/components/Question";
 import Answer from "@/components/Answer";
+import PersonalList from "@/components/PersonalList";
+import ChangeInfo from "@/components/ChangeInfo";
 
 const NotFound = { template: '<p>Page not found</p>' }
 
@@ -28,7 +30,12 @@ const routes = [
         },
         { path: 'login', component: Login },
         { path: 'register', component: Register },
-        { path: 'personalPage', component: PersonalPage },
+        { path: 'personalPage', component: PersonalPage,redirect:"personalPage/personalList",
+            children:[
+                {path: "personalList",component: PersonalList}
+            ]
+        },
+        { path:"changeInfo",component:ChangeInfo},
         { path: 'search', component: ItemList }
     ]},
     { path: '*', component: NotFound }

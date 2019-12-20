@@ -1,5 +1,5 @@
 <template>
-    <card style="max-width: 1200px; margin: 20px auto 0 auto; padding: 0 20px">
+    <card style="max-width: 1000px; margin: 20px auto 0 auto; padding: 0 20px">
         <Tabs :value="tabType">
             <TabPane label="我的收藏" :disabled="postingTab" name="posting">
                 <List item-layout="vertical">
@@ -27,10 +27,48 @@
                 </List>
             </TabPane>
             <TabPane label="我的帖子" :disabled="topicTab" name="topic">
-
+                <List>
+                    <ListItem v-for="item in list" :key="item.postingId" style="text-align: left">
+                        <ListItemMeta avatar=""  :description="item.topic">
+                            <template slot="title">
+                                <router-link :to="{path: 'posting', query:{ postingId: item.postingId }}">
+                                    {{ item.title }}
+                                </router-link>
+                            </template>
+                        </ListItemMeta>
+                        <template slot="action">
+                            <li>
+                                <Icon type="ios-eye-outline" /> 浏览量
+                            </li>
+                            <li>
+                                <Icon type="ios-star-outline" /> 收藏量
+                            </li>
+                        </template>
+                    </ListItem>
+                </List>
             </TabPane>
             <TabPane label="我的关注" :disabled="userTab" name="user">
-
+                <List>
+                    <ListItem v-for="item in userList" :key="item.postingId" style="text-align: left">
+                        <ListItemMeta   :description="item.intro">
+                            <template slot="avatar">
+                                <avatar :src="item.avatar" size="40"></avatar>
+                            </template>
+                                <template slot="title">
+                                <router-link :to="{path: 'personalPage', query:{ userId: item.userId }}">
+                                    <div style="font-size:24px">
+                                        {{ item.username }}
+                                    </div>
+                                </router-link>
+                            </template>
+                        </ListItemMeta>
+                        <template slot="action">
+                            <li v-bind="button">
+                                <Button type="primary" @mouseover="mouseOn">{{button.content}}</Button>
+                            </li>
+                        </template>
+                    </ListItem>
+                </List>
             </TabPane>
         </Tabs>
     </card>
@@ -83,6 +121,40 @@
                         pic: require('../assets/pic/5.jpg'),
                     }
                 ],
+                userList:[
+                    {
+                        userId:"001",
+                        avatar: require('../assets/avatar/1.jpg'),
+                        username:"user1",
+                        intro:"a single dog.a bad dog.a good boy." + "Waiting for connection to localhost:52956.",
+                    },
+                    {
+                        userId:"002",
+                        avatar: require('../assets/avatar/2.jpg'),
+                        username:"user2",
+                        intro:"a single dog.a bad dog.a good boy." + "Waiting for connection to localhost:52956." +
+                            "App running at:" +
+                            "  - Local:   http://localhost:8080/" +
+                            "  - Network: http://192.168.43.174:8080/",
+                    },
+                    {
+                        userId:"0031",
+                        avatar: require('../assets/avatar/3.jpg'),
+                        username:"user3",
+                        intro:"a single dog.a bad dog.a good boy." + "Waiting for connection to localhost:52956.",
+                    },
+                    {
+                        userId:"011",
+                        avatar: require('../assets/avatar/11.jpg'),
+                        username:"user11",
+                        intro:"a student of Peking university, handsome and tall",
+                    },
+                ],
+                button:{
+                    seen:true,
+                    content:"已关注",
+                    hidden:"取消关注"
+                }
             }
         },
         computed: {
@@ -135,6 +207,9 @@
                 this.$nextTick(()=>{
                     this.avaiHeight = document.documentElement.clientHeight - 60
                 })
+            },
+            mouseOn(){
+                this.button.content="取消关注";
             }
         },
         mounted(){
@@ -145,7 +220,8 @@
         },
         destroyed(){
             window.onresize = null;
-        }
+        },
+
     }
 </script>
 
