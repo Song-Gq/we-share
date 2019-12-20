@@ -21,9 +21,12 @@ yarn-error.log*
 *.sw?
 
 /babel.config.js
-/package.json
 /package-lock.json
 
 /public/favicon.ico
 /src/assets/logo.png
 /src/components/HelloWorld.vue
+/public/avatar/
+/public/pic/
+/src/assets/avatar/
+/src/assets/pic/
