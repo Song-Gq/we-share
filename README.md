@@ -58,6 +58,19 @@ see https://www.iviewui.com/
     新增标签搜索结果  
     优化了搜索栏逻辑  
     修正了加载更多逻辑  
+  * merge from zdy
+* 12/12  
+  * 优化了搜索和标签页逻辑  
+    新增用户搜索结果列表  
+    编辑页面新增标题和话题域及检查机制  
+* 12/20  
+  * 部分实现axios发送请求及处理  
+  * ignore了图片素材，现在需要public/avatar，public/pic，
+  src/assets/avatar，src/assets/pic下的素材，
+  将assets下的文件夹复制到public下即可  
+  * public/testData下新增测试接口用json  
+  * src/api下新增接口处理的js文件  
+  * 上传package.json  
 
 ## Project setup
 ```

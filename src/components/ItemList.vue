@@ -7,7 +7,12 @@
                         <ListItem v-for="item in list" :key="item.postingId" style="text-align: left">
                             <ListItemMeta :avatar="item.avatar" >
                                 <template slot="description">
-                                    <tag color="blue">{{item.topic}}</tag>
+                                    <router-link v-for="topic in item.topic" :key="topic.id"
+                                                 :to="{path: '/search', query:{ type: 'postingbytag', text: topic.id }}">
+                                        <tag color="blue" >
+                                            {{topic.name}}
+                                        </tag>
+                                    </router-link>
                                 </template>
                                 <template slot="title">
                                     <router-link :to="{path: 'posting', query:{ postingId: item.postingId }}">
@@ -18,10 +23,13 @@
                             {{ item.content }}
                             <template slot="action">
                                 <li>
-                                    <Icon type="md-eye" /> 浏览量
+                                    <Icon type="md-information-circle" /> 帖子ID {{item.postingId}}
                                 </li>
                                 <li>
-                                    <Icon type="md-star" /> 收藏量
+                                    <Icon type="md-eye" /> 浏览量 {{item.views}}
+                                </li>
+                                <li>
+                                    <Icon type="md-star" /> 收藏量 {{item.stars}}
                                 </li>
                             </template>
                             <template slot="extra" style="max-height: fit-content">
@@ -35,59 +43,29 @@
 <!--                        <Card icon="md-pricetag" :padding="0" style="width: 300px; margin: 0 auto">-->
                             <CellGroup v-for="item in tlist" :key="item.tagId" style="padding: 5px">
                                 <Cell :title="item.tagName" extra="搜索该话题下的帖子"
-                                      :to="{path: '/search', query:{ type: 'posting', text: item.tagName }}" />
+                                      :to="{path: '/search', query:{ type: 'postingbytag', text: item.tagId }}" >
+                                    <template slot="label">
+                                        话题ID: {{item.tagId}}
+                                    </template>
+                                </Cell>
                             </CellGroup>
 <!--                        </Card>-->
                     </div>
-<!--
-                    <Row type="flex" justify="space-around" class="code-row-bg" style="padding: 10px" >
-                        <i-col span="3">
-                            <Button shape="circle" >
-                                tag
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                            <Button shape="circle" >
-                                tag12345678
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                            <Button shape="circle" >
-                                tag3333
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                        </i-col>
-                        <i-col span="3">
-                            <Button shape="circle" >
-                                11111111111111111111111tag
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                            <Button shape="circle" >
-                                123tag
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                            <Button shape="circle" >
-                                tag000000000
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                        </i-col>
-                        <i-col span="3">
-                            <Button shape="circle" >
-                                tag234567890-
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                            <Button shape="circle" >
-                                tag789098765
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                            <Button shape="circle" >
-                                tag871
-                                <Icon type="ios-arrow-forward" />
-                            </Button>
-                        </i-col>
-                    </Row>
--->
                 </TabPane>
                 <TabPane :label="popularUser" :disabled="userTab" name="user">
-
+                    <div style="text-align: left">
+                        <CellGroup v-for="item in ulist" :key="item.userId" style="padding: 5px">
+                            <Cell :to="{path: '/personalpage', query:{ userid: item.userId }}" >
+                                <avatar :src="item.avatar" />
+                                <template>
+                                    {{item.userName}}
+                                </template>
+                                <template slot="label">
+                                    用户ID: {{item.userId}}
+                                </template>
+                            </Cell>
+                        </CellGroup>
+                    </div>
                 </TabPane>
             </Tabs>
         </card>
@@ -100,95 +78,59 @@
 </template>
 
 <script>
+    import httpPop from "@/api/httpPop";
+    import httpSearch from "@/api/httpSearch";
+
     export default {
         name: "ItemList",
         data () {
             return {
-                list: [
-                    {
-                        postingId: 'posting id 1',
-                        title: 'This is title 1',
-                        topic: 'Topic1 Topic2 Topic3',
-                        avatar: require('../assets/avatar/1.jpg'),
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/1.jpg'),
-                    },
-                    {
-                        postingId: 'posting id 2',
-                        title: 'This is title 2',
-                        topic: 'Topic1 Topic2 Topic3',
-                        avatar: require('../assets/avatar/2.jpg'),
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/2.jpg'),
-                    },
-                    {
-                        postingId: 'posting id 3',
-                        title: 'This is title 3',
-                        topic: 'Topic1 Topic2 Topic3',
-                        avatar: require('../assets/avatar/3.jpg'),
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/3.jpg'),
-                    },
-                    {
-                        postingId: 'posting id 4',
-                        title: 'This is title 4',
-                        topic: 'Topic1 Topic2 Topic3',
-                        avatar: require('../assets/avatar/4.jpg'),
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/4.jpg'),
-                    },
-                    {
-                        postingId: 'posting id 5',
-                        title: 'This is title 5',
-                        topic: 'Topic1 Topic2 Topic3',
-                        avatar: require('../assets/avatar/5.jpg'),
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/5.jpg'),
-                    }
-                ],
-                tlist: [
-                    {
-                        tagName: 'tag11111111111',
-                        tagId: '1'
-                    },
-                    {
-                        tagName: 'tag11111111111',
-                        tagId: '2'
-                    },                    {
-                        tagName: 'tag11122222222222211111111',
-                        tagId: '3'
-                    },                    {
-                        tagName: 'tag11113331111111',
-                        tagId: '4'
-                    },                    {
-                        tagName: 'tag111444444444411111111',
-                        tagId: '5'
-                    },                    {
-                        tagName: 'tag111155555555555555555555555551111111',
-                        tagId: '6'
-                    },                    {
-                        tagName: 'tag11111111111',
-                        tagId: '7'
-                    },                    {
-                        tagName: 'tag11111111111',
-                        tagId: '8'
-                    },                    {
-                        tagName: 'tag11111111111',
-                        tagId: '9'
-                    },                    {
-                        tagName: 'tag11111111111',
-                        tagId: '10'
-                    },
-                ],
                 avaiHeight: document.documentElement.clientHeight - 60,
                 loading: false,
-                tabTypeData: ""
+                tabTypeData: "",
+                list: [],
+                tlist: [],
+                ulist: []
             }
         },
         computed: {
+/*            list: function () {
+                if (this.$route.path.substr(1).split('/')[0] === 'index') {
+                    httpPop.get('posting', '1', data => {
+                        //window.console.log(data)
+                        return data
+                    })
+                }
+                if(this.$route.query.type === "posting"
+                    || this.$route.query.type === undefined
+                    || this.$route.query.type === "postingbytag" )
+                {
+                    window.console.log(this.$route.query.list)
+                    return this.$route.query.list
+                }
+                window.console.log("!!!!!!!")
+                return undefined
+            },
+            tlist: function() {
+                if (this.$route.path.substr(1).split('/')[0] === 'index')
+                    httpPop.get('topic', '1', data=>{
+                        //window.console.log(data)
+                        return data
+                    })
+                if(this.$route.query.type === "topic" || this.$route.query.type === undefined)
+                    return this.$route.query.list
+                return undefined
+            },
+            ulist: function() {
+                if(this.$route.query.type === "user")
+                    return this.$route.query.list
+                return undefined
+            },*/
             tabType: {
                 get() {
                     this.pageResize()
+                    if(this.$route.query.type === "postingbytag" || this.tabTypeData === 'postingbytag')
+                        return "posting"
                     if(this.$route.query.type !== undefined)
                         return this.$route.query.type
                     else if (this.tabTypeData !== '' && this.tabTypeData !== 'user')
@@ -200,7 +142,9 @@
                 }
             },
             postingTab: function () {
-                if(this.$route.query.type === "posting" || this.$route.query.type === undefined) {
+                if(this.$route.query.type === "posting"
+                    || this.$route.query.type === undefined
+                    || this.$route.query.type === "postingbytag" ) {
                     return false;
                 }
                 return true;
@@ -220,6 +164,8 @@
             popularPosting: function () {
                 if(this.$route.query.type === undefined)
                     return "热门帖子"
+                else if (this.$route.query.type === "postingbytag")
+                    return "话题下帖子的搜索结果"
                 return "帖子的搜索结果"
             },
             popularTopic: function () {
@@ -248,7 +194,7 @@
                                 this.list.push({
                                     postingId: 'posting id ' + idx,
                                     title: "This is title " + idx,
-                                    topic: 'Topic1 Topic2 Topic3',
+                                    topic: [ 'Topic1', 'Topic2', 'Topic3' ],
                                     avatar: require('../assets/avatar/' + idx + '.jpg'),
                                     content: 'This is the content, this is the content, this is the content, this is the content.',
                                     pic: require('../assets/pic/' + idx + '.jpg'),
@@ -261,8 +207,10 @@
                                 });
                             }
                             else if (this.tabType === 'user') {
-                                this.list.push({
-
+                                this.ulist.push({
+                                    userName: 'newusername' + idx,
+                                    userId: 'newuserid' + idx,
+                                    avatar: require('../assets/avatar/' + idx + '.jpg')
                                 });
                             }
                         }
@@ -279,9 +227,40 @@
             toLoading(){
                 this.loading = true
                 this.handleReachBottom()
+            },
+            updateList() {
+                this.list = undefined
+                this.tlist = undefined
+                this.ulist = undefined
+
+                if (this.$route.path.substr(1).split('/')[0] === 'index') {
+                    httpPop.get('posting', '1', data => {
+                        //window.console.log(data)
+                        this.list = data
+                    })
+                    httpPop.get('topic', '1', data => {
+                        //window.console.log(data)
+                        this.tlist = data
+                    })
+                }
+                else {
+                    httpSearch.get(this.$route.query.type, this.$route.query.text, 1, data=>{
+                        if(this.$route.query.type === "posting"
+                            || this.$route.query.type === undefined
+                            || this.$route.query.type === "postingbytag" )
+                            this.list = data
+                        else if(this.$route.query.type === "topic" || this.$route.query.type === undefined)
+                            this.tlist = data
+                        else if(this.$route.query.type === "user")
+                            this.ulist = data
+                    })
+                }
             }
         },
-        mounted(){
+        created(){
+            this.updateList()
+        },
+        mounted() {
             let _this = this;
             window.onresize = ()=>{
                 _this.pageResize();
@@ -289,7 +268,43 @@
         },
         destroyed(){
             window.onresize = null;
-        }
+        },
+        watch: {
+            '$route'() {
+                // 对路由变化作出响应...
+                this.updateList()
+            }
+        },
+        // beforeRouteUpdate (to, from, next) {
+        //     window.console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        //     this.list = undefined
+        //     this.tlist = undefined
+        //     this.ulist = undefined
+        //
+        //     if (this.$route.path.substr(1).split('/')[0] === 'index') {
+        //         httpPop.get('posting', '1', data => {
+        //             //window.console.log(data)
+        //             this.list = data
+        //         })
+        //         httpPop.get('topic', '1', data => {
+        //             //window.console.log(data)
+        //             this.tlist = data
+        //         })
+        //     }
+        //     else {
+        //         httpSearch.get(this.$route.query.type, this.$route.query.text, 1, data=>{
+        //             if(this.$route.query.type === "posting"
+        //                 || this.$route.query.type === undefined
+        //                 || this.$route.query.type === "postingbytag" )
+        //                 this.list = data
+        //             else if(this.$route.query.type === "topic" || this.$route.query.type === undefined)
+        //                 this.tlist = data
+        //             else if(this.$route.query.type === "user")
+        //                 this.ulist = data
+        //         })
+        //     }
+        //     next()
+        // }
     }
 </script>
 

@@ -25,10 +25,10 @@
                         登录/注册
                     </template>
                     <MenuGroup title="用户账户">
-                        <MenuItem name="login">
+                        <MenuItem name="login" to="login">
                             登录
                         </MenuItem>
-                        <MenuItem name="register">
+                        <MenuItem name="register" to="register">
                             注册
                         </MenuItem>
                     </MenuGroup>
@@ -39,6 +39,7 @@
 </template>
 
 <script>
+
     export default {
         name: "NaviBar",
         data () {
@@ -52,8 +53,11 @@
         computed: {
             searchText: {
                 get() {
-                    if (this.$route.query.text !== undefined)
+                    if (this.$route.query.text !== undefined) {
+                        if (this.$route.query.type == 'postingbytag')
+                            return '话题ID：' + this.$route.query.text
                         return this.$route.query.text
+                    }
                     else if(this.searchTextData !== "")
                         return this.searchTextData
                     else
@@ -69,10 +73,20 @@
 /*                window.console.log('textdata' + this.searchTextData)
                 if(this.searchTextData !== "")
                     this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchTextData }})*/
-                if(this.searchTextData !== "" && this.searchTextData !== undefined)
+                if(this.searchTextData !== "" && this.searchTextData !== undefined){
+                    // httpSearch.get(this.searchType, this.searchTextData, 1, data=>{
+                    //     this.$router.push({path: '/search', query:{ type: this.searchType,
+                    //             text: this.searchTextData, list: data}})
+                    // })
                     this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchTextData }})
-                else if (this.searchText !== undefined && this.searchText !== "")
+                }
+                else if (this.searchText !== undefined && this.searchText !== "") {
+                    // httpSearch.get(this.searchType, this.searchText, 1, data=>{
+                    //     this.$router.push({path: '/search', query:{ type: this.searchType,
+                    //             text: this.searchText, list: data}})
+                    // })
                     this.$router.push({path: '/search', query:{ type: this.searchType, text: this.searchText }})
+                }
             },
             outFocus(name) {
                 this.$nextTick(() => {

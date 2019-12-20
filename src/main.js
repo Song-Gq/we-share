@@ -35,7 +35,7 @@ const routes = [
                 {path: "personalList",component: PersonalList}
             ]
         },
-        {path:"changeInfo",component:ChangeInfo},
+        { path:"changeInfo",component:ChangeInfo},
         { path: 'search', component: ItemList }
     ]},
     { path: '*', component: NotFound }
