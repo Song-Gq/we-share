@@ -1,0 +1,79 @@
+{
+  "list": [
+    {
+      "postingId": 67811910,
+      "title": "popPosting.json",
+      "content": "This is the content, this is the content, this is the content, this is the content.",
+      "pic": "pic/1.jpg",
+      "views": 123,
+      "stars": 123,
+      "topic": [
+        {"id": 5, "name": "Topic1"},
+        {"id": 6, "name": "Topic2"},
+        {"id": 1, "name": "Topic3"}
+      ],
+      "avatar": "avatar/1.jpg",
+      "userId": 12345
+    },
+    {
+      "postingId": 67822910,
+      "title": "This is 2222 title",
+      "content": "This is the content, this is the content, this is the content, this is the content.",
+      "pic": "pic/2.jpg",
+      "views": 123,
+      "stars": 123,
+      "topic": [
+        {"id": 5, "name": "Topic1"},
+        {"id": 6, "name": "Topic2"},
+        {"id": 1, "name": "Topic3"}
+      ],
+      "avatar": "avatar/2.jpg",
+      "userId": 1232222222245
+    },
+    {
+      "postingId": 63378910,
+      "title": "33333 This is title ",
+      "content": "This is the content, this is the content, this is the content, this is the content.",
+      "pic": "pic/3.jpg",
+      "views": 123,
+      "stars": 123,
+      "topic": [
+        {"id": 5, "name": "Topic1"},
+        {"id": 6, "name": "Topic2"},
+        {"id": 1, "name": "Topic3"}
+      ],
+      "avatar": "avatar/3.jpg",
+      "userId": 1233345
+    },
+    {
+      "postingId": 64478910,
+      "title": "This is title 4",
+      "content": "This is the content, this is the content, this is the content, this is the content.",
+      "pic": "pic/4.jpg",
+      "views": 123,
+      "stars": 123,
+      "topic": [
+        {"id": 5, "name": "Topic1"},
+        {"id": 6, "name": "Topic2"},
+        {"id": 1, "name": "Topic3"}
+      ],
+      "avatar": "avatar/4.jpg",
+      "userId": 121144345
+    },
+    {
+      "postingId": 67891550,
+      "title": "This is title 5555555555555555555",
+      "content": "This is the content, this is the content, this is the content, this is the content.",
+      "pic": "pic/5.jpg",
+      "views": 123,
+      "stars": 123,
+      "topic": [
+        {"id": 5, "name": "Topic1"},
+        {"id": 6, "name": "Topic2"},
+        {"id": 1, "name": "Topic3"}
+      ],
+      "avatar": "avatar/5.jpg",
+      "userId": 126655345
+    }
+  ]
+}
