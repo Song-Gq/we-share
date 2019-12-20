@@ -1,24 +1,24 @@
 <template>
     <div>
-        <div  id="upper" v-for="user in list " :key="user">
+        <div  id="upper" v-bind="user">
            <div style="margin-left: 20px">
-                <avatar v-bind:src="user.avatar" size="150"  />
+                <avatar :src="user.avatar" size="150"  />
             </div>
             <div id="right">
                 <div style="margin-top: 40px">
                     <h1>{{user.username}}</h1>
                 </div>
-                <Tooltip max-width="300" v-bind:content="user.intro">
+                <Tooltip max-width="300" :content="user.intro">
                     <div class="text">
                         <Icon type="ios-card" size="24"/>&nbsp;{{user.intro}}
                     </div>
                 </Tooltip>
             </div>
             <div style="margin-top:110px;margin-left: 240px">
-                <Button type="primary" ghost>编辑个人资料</Button>
+                <Button type="primary"  ghost to="/changeInfo">编辑个人资料</Button>
             </div>
         </div>
-        <div style="background: #42b983;width: 1000px;height: 600px;margin: 20px auto 0 auto">
+        <div>
             <personal-list></personal-list>
         </div>
     </div>
@@ -32,19 +32,12 @@
         components: {PersonalList},
         data(){
             return {
-                list:[
-                    {
+                user: {
                         avatar:require('../assets/avatar/1.jpg'),
                         username:"user1",
-                        intro:"a single dog.a bad dog.a good boy." +
-                            "Waiting for connection to localhost:52956." +
-                            "Please ensure that the browser was started successfully with remote debugging port opened." +
-                            "tPort cannot be opened if Chrome having the same User Data Directory is already launched." +
-                            "More info..."
-                    }
-                ]
+                        intro:"a single dog.a bad dog.a good boy."
+                }
             }
-
         }
     }
 </script>
@@ -89,6 +82,4 @@
         -webkit-line-clamp:3; /*想要显示的行数*/
         -webkit-box-orient: vertical;
     }
-
-
 </style>
