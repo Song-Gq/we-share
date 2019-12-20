@@ -51,11 +51,24 @@ Router.prototype.push = function push(location, onResolve, onReject) {
     return originalPush.call(this, location).catch(err => err)
 }
 
+// var hasLogin = false
+// var userId = -1
+// var hasLogin = true
+// var userId = 111
+
 Vue.config.productionTip = false
 Vue.use(ViewUI, {
 });
 Vue.use(VueRouter);
+// Vue.prototype.$hasLogin = hasLogin
+// Vue.prototype.$userId = userId
 
 new Vue({
-    router
+    router,
+    data() {
+        return {
+            hasLogin: true,
+            userId: 1112
+        }
+    }
 }).$mount('#app')
