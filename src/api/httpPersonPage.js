@@ -33,11 +33,12 @@ export default {
             window.console.log(error);
         });
     },
-    changeUserInfo(avatar,userName,gender,email,intro,callback){
+    changeUserInfo(uid,avatar,userName,gender,email,intro,callback){
         http.request({
             url:'/editUserInfoConfirm.json',
             method:'GET',
             params:{
+                userId:uid,
                 avatar:avatar,
                 userName:userName,
                 gender:gender,
@@ -81,6 +82,19 @@ export default {
             }
             }
         ).then(function (response) {
+            var result=response.data.ok;
+            callback(result)
+        })
+    },
+    deletePost(uid,postid,callback){
+        http.request({
+            url:'/editUserInfoConfirm.json',
+            method:'GET',
+            params:{
+                userId:uid,
+                postingId:postid
+            }
+        }).then(function (response) {
             var result=response.data.ok;
             callback(result)
         })

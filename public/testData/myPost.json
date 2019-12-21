@@ -3,8 +3,6 @@
     {
       "postingId": 22222222222,
       "title": "popPosting.json",
-      "content": "This is the content, this is the content, this is the content, this is the content.",
-      "pic": "pic/1.jpg",
       "views": 123,
       "stars": 123,
       "topic": [

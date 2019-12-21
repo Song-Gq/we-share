@@ -137,7 +137,7 @@
                             _gender = 1
                         // window.console.log(this.formValidate.avatar,this.formValidate.name,_gender,
                         //     this.formValidate.mail,this.formValidate.desc)
-                        htmlPersonPage.changeUserInfo(this.formValidate.avatar, this.formValidate.name, _gender,
+                        htmlPersonPage.changeUserInfo(this.$root.userId,this.formValidate.avatar, this.formValidate.name, _gender,
                             this.formValidate.mail, this.formValidate.desc, data => {
                                 if (data['isSuccess'] === 0)
                                     this.$Message.success('修改成功!');

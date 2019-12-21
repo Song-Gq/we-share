@@ -63,6 +63,9 @@
                                 <li>
                                     <Icon type="ios-star-outline" /> 收藏量 {{item.stars}}
                                 </li>
+                                <li>
+                                    <Button @click="deletePosting(item.postingId)">删除</Button>
+                                </li>
                             </template>
                         </ListItem>
                     </List>
@@ -192,6 +195,19 @@
                     else
                         this.$Message.error("取关失败")
                 })
+            },
+            deletePosting(name){
+                if(this.$root.hasLogin===true){
+                    // window.console.log(name)
+                    httpPersonPage.deletePost(this.$root.userId,name,data=>{
+                        if(data['isSuccess']===0){
+                            this.updateList()
+                            this.$Message.success("删除成功！")
+                        }
+                        else
+                            this.$Message.error("删除失败！")
+                    })
+                }
             },
             toLoading(){
                 this.loading = true
