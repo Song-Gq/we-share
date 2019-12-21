@@ -25,10 +25,10 @@
                         登录/注册
                     </template>
                     <MenuGroup title="用户账户">
-                        <MenuItem name="login" to="login">
+                        <MenuItem name="login" to="/login">
                             登录
                         </MenuItem>
-                        <MenuItem name="register" to="register">
+                        <MenuItem name="register" to="/register">
                             注册
                         </MenuItem>
                     </MenuGroup>
