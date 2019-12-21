@@ -19,7 +19,7 @@ const dataHandler = data => {
 export default {
     getUserInfo(userId, callback) {
         http.request({
-            url: '/userInfo.json',
+            url: baseURL=='testData'?'/userInfo.json':'/personalPage',
             method: 'GET',
             params: {
                 userId:userId
@@ -35,7 +35,7 @@ export default {
     },
     changeUserInfo(uid,avatar,userName,gender,email,intro,callback){
         http.request({
-            url:'/editUserInfoConfirm.json',
+            url:baseURL==='testData'?'/editUserInfoConfirm.json':'/changeInfo',
             method:'GET',
             params:{
                 userId:uid,
@@ -56,7 +56,7 @@ export default {
                 (searchType === 'myFavorite') ? '/MyFavo.json' : (
                     searchType === 'myPost' ? '/myPost.json' : '/myFocus.json'
                 )
-            ) : '/search',
+            ) : '/personalPage',
             method: 'GET',
             params: {
                 userId:uid,
@@ -74,7 +74,7 @@ export default {
     },
     unfollowUser(uid,fid,callback){
         http.request({
-            url:'/editUserInfoConfirm.json',
+            url:baseURL==='testData'?'/editUserInfoConfirm.json':'/personalPage/personalList',
             method:'GET',
             params:{
                 userId:uid,
@@ -88,7 +88,7 @@ export default {
     },
     deletePost(uid,postid,callback){
         http.request({
-            url:'/editUserInfoConfirm.json',
+            url:baseURL==='testData'?'/editUserInfoConfirm.json':'/personalPage/personalList',
             method:'GET',
             params:{
                 userId:uid,

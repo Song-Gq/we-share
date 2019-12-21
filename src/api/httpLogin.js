@@ -17,7 +17,7 @@ const http=axios.create({
 export default {
     get(email,pwd,callback){
         http.request({
-            url: '/loginUser.json',
+            url: baseURL=='testData'?'/loginUser.json':'/login',
             method: 'GET',
             params: {
                 email: email,
