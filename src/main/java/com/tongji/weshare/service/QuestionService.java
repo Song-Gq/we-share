@@ -17,4 +17,8 @@ public class QuestionService {
     public List<Question> getQuestions(QuestionExample example) {
         return questionMapper.selectByExampleWithBLOBs(example);
     }
+
+    public int newQuestion(Question question) {
+        return questionMapper.insertSelective(question);
+    }
 }

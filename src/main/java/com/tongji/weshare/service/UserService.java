@@ -20,4 +20,16 @@ public class UserService {
     public List<User> getUsers(UserExample example) {
         return userMapper.selectByExample(example);
     }
+
+    public long countUsers(UserExample example) {
+        return userMapper.countByExample(example);
+    }
+
+    public int newUser(User user) {
+        return userMapper.insertSelective(user);
+    }
+
+    public int updateUser(User user) {
+        return userMapper.updateByPrimaryKeySelective(user);
+    }
 }

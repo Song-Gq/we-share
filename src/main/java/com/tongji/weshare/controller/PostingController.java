@@ -6,6 +6,7 @@ import com.sun.xml.internal.messaging.saaj.packaging.mime.util.QEncoderStream;
 import com.tongji.weshare.entity.*;
 import com.tongji.weshare.model.*;
 import com.tongji.weshare.service.*;
+import javafx.geometry.Pos;
 import org.apache.tomcat.util.buf.UEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,6 +36,7 @@ public class PostingController {
     public String getPostingOrQuestion(Integer postingId, Integer postingPage, Integer questionPage) {
         String response = "";
         if (questionPage == 0) {
+
             PostExample postExample = new PostExample();
             PostContentExample postContentExample = new PostContentExample();
             UserExample userExample = new UserExample();
@@ -52,6 +54,13 @@ public class PostingController {
             List<User> users = userService.getUsers(userExample);
             criteriaTag.andPostIdEqualTo(postingId);
             List<Tag> tags = tagService.getTags(tagExample);
+
+            //views increase
+            int views = posts.get(0).getViews();
+            Post post = new Post();
+            post.setPostId(postingId);
+            post.setViews(views + 1);
+            int updatePost = postService.updatePost(post);
 
             PageHelper.startPage(postingPage, 5);
             postContentExample.setOrderByClause("floor asc");

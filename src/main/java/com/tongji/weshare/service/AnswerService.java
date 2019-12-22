@@ -17,4 +17,8 @@ public class AnswerService {
     public List<Answer> getAnswers(AnswerExample example) {
         return answerMapper.selectByExampleWithBLOBs(example);
     }
+
+    public int newAnswer(Answer answer) {
+        return answerMapper.insertSelective(answer);
+    }
 }

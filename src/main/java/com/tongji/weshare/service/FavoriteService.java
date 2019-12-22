@@ -17,4 +17,8 @@ public class FavoriteService {
     public List<Favorite> getFavorites(FavoriteExample example) {
         return favoriteMapper.selectByExample(example);
     }
+
+    public int newFavorite(Favorite favorite) {
+        return favoriteMapper.insert(favorite);
+    }
 }

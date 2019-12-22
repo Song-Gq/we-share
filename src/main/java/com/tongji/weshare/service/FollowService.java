@@ -17,4 +17,12 @@ public class FollowService {
     public List<Follow> getFollows(FollowExample example) {
         return followMapper.selectByExample(example);
     }
+
+    public int newFollow(Follow follow) {
+        return followMapper.insert(follow);
+    }
+
+    public int deleteFollow(FollowExample example) {
+        return followMapper.deleteByExample(example);
+    }
 }

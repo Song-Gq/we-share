@@ -44,4 +44,12 @@ public class PostService {
         return postContentMapper.countByExample(postContentExample);
     }
 
+    public int deletePost(PostExample example) {
+        return postMapper.deleteByExample(example);
+    }
+
+    public int updatePost(Post post) {
+        return postMapper.updateByPrimaryKeySelective(post);
+    }
+
 }

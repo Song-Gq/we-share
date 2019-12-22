@@ -37,9 +37,14 @@ public class EditController {
         PostExample postExample = new PostExample();
         PostExample.Criteria criteriaPost = postExample.createCriteria();
         long countPosts = postService.countPosts(postExample);
-        int postId = (int) (countPosts + 1);
-        post.setPostId(postId);
         int insertPost = postService.newPost(post);
+        PostExample postExample1 = new PostExample();
+        postExample.setOrderByClause("post_id desc");
+        PostExample.Criteria criteriaPost1 = postExample1.createCriteria();
+        criteriaPost1.andPosterIdEqualTo(posterId);
+        criteriaPost1.andTitleEqualTo(title);
+        List<Post> posts1 = postService.getPosts(postExample);
+        int postId = posts1.get(0).getPostId();
         PostContent postContent = new PostContent();
         postContent.setPostId(postId);
         postContent.setFloor(1);
