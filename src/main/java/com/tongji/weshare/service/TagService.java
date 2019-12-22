@@ -17,4 +17,8 @@ public class TagService {
     public List<Tag> getTags(TagExample example) {
         return tagMapper.selectByExample(example);
     }
+
+    public long countTags(TagExample example) {
+        return tagMapper.countByExample(example);
+    }
 }
