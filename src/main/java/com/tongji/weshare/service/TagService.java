@@ -21,4 +21,8 @@ public class TagService {
     public long countTags(TagExample example) {
         return tagMapper.countByExample(example);
     }
+
+    public int newTagPostPair(Tag tag) {
+        return tagMapper.insert(tag);
+    }
 }

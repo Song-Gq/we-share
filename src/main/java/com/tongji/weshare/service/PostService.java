@@ -28,5 +28,20 @@ public class PostService {
         return postContentMapper.selectByExampleWithBLOBs(postContentExample);
     }
 
+    public int newPost(Post post) {
+        return postMapper.insertSelective(post);
+    }
+
+    public int newPostContent(PostContent postContent) {
+        return postContentMapper.insertSelective(postContent);
+    }
+
+    public long countPosts(PostExample postExample) {
+        return postMapper.countByExample(postExample);
+    }
+
+    public long countPostContents(PostContentExample postContentExample) {
+        return postContentMapper.countByExample(postContentExample);
+    }
 
 }
