@@ -15,7 +15,7 @@
                 </Tooltip>
             </div>
             <div style="margin-top:110px;margin-left: 240px">
-                <Button type="primary"  ghost to="/changeInfo">编辑个人资料</Button>
+                <Button type="primary"  ghost to="/changeInfo" :disabled="editable">编辑个人资料</Button>
             </div>
         </div>
         <div>
@@ -43,7 +43,7 @@
         methods:{
            showInfo(){
                if(this.$root.hasLogin===true)
-                   httpPersonPage.getUserInfo(this.$root.userId,data=>{
+                   httpPersonPage.getUserInfo(this.$route.query.userId,data=>{
                        this.user.avatar=data['avatar']
                        this.user.username=data['userName']
                        this.user.intro=data['introduction']
@@ -52,6 +52,13 @@
         },
         created(){
             this.showInfo()
+        },
+        computed: {
+            editable: function () {
+                if(this.$root.userId === this.$route.query.userId)
+                    return false
+                return true
+            }
         }
     }
 </script>

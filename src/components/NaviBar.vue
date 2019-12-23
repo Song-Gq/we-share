@@ -22,14 +22,14 @@
                 <Submenu name="login">
                     <template slot="title">
                         <Icon type="md-person" />
-                        登录/注册
+                        {{loginOrName}}
                     </template>
                     <MenuGroup title="用户账户">
-                        <MenuItem name="login" to="/login">
-                            登录
+                        <MenuItem name="login">
+                            {{loginOrlogout}}
                         </MenuItem>
-                        <MenuItem name="register" to="/register">
-                            注册
+                        <MenuItem name="register">
+                            {{registerOrPersonal}}
                         </MenuItem>
                     </MenuGroup>
                 </Submenu>
@@ -66,6 +66,21 @@
                 set(val) {
                     this.searchTextData = val
                 }
+            },
+            loginOrName: function () {
+                if (this.$root.hasLogin)
+                    return 'ID: ' + this.$root.userId
+                return '登录/注册'
+            },
+            loginOrlogout: function () {
+                if (this.$root.hasLogin)
+                    return '登出'
+                return '登录'
+            },
+            registerOrPersonal: function () {
+                if (this.$root.hasLogin)
+                    return '个人主页'
+                return '注册'
             }
         },
         methods: {
@@ -89,6 +104,24 @@
                 }
             },
             outFocus(name) {
+                if (name === 'login') {
+                    if (this.$root.hasLogin === false)
+                        this.$router.push({path: '/login'})
+                    else {
+                        this.$root.hasLogin = false
+                        this.$root.userId = false
+                        this.$router.push({path: '/index'})
+                        this.$Message.warning('已登出')
+                    }
+                }
+                else if (name == 'register') {
+                    if (this.$root.hasLogin === false)
+                        this.$router.push({path: '/register'})
+                    else {
+                        this.$router.push({path: '/personalpage', query:{ userId: this.$root.userId }})
+                    }
+                }
+
                 this.$nextTick(() => {
                     this.active = this.$route.path.substr(1).split('/')[0]
                     this.$refs.menu.updateActiveName()
@@ -98,7 +131,12 @@
                         this.$refs.menu.updateActiveName()
                     }
                 })
-            }
+            },
+            // checkLogin() {
+            //     if (this.$root.hasLogin === true) {
+            //
+            //     }
+            // }
         },
         mounted() {
             this.$nextTick(()=>{
@@ -106,12 +144,15 @@
                 this.$refs.menu.updateActiveName()
             })
         },
-        watch: {
-            '$route'() {
-                // 对路由变化作出响应...
-                this.outFocus()
-            }
-        },
+        // watch: {
+        //     '$route'() {
+        //         // 对路由变化作出响应...
+        //         this.outFocus()
+        //     },
+        //     '$root.hasLogin'() {
+        //         this.checkLogin()
+        //     }
+        // },
     }
 </script>
 

@@ -82,7 +82,8 @@
                     // interest: [],
                     // date: '',
                     // time: '',
-                    desc: ''
+                    desc: '',
+                    avaName:''
                 },
                 ruleValidate: {
                     name: [
@@ -137,7 +138,7 @@
                             _gender = 1
                         // window.console.log(this.formValidate.avatar,this.formValidate.name,_gender,
                         //     this.formValidate.mail,this.formValidate.desc)
-                        htmlPersonPage.changeUserInfo(this.$root.userId,this.formValidate.avatar, this.formValidate.name, _gender,
+                        htmlPersonPage.changeUserInfo(this.$root.userId,this.formValidate.avaName, this.formValidate.name, _gender,
                             this.formValidate.mail, this.formValidate.desc, data => {
                                 if (data['isSuccess'] === 0)
                                     this.$Message.success('修改成功!');
@@ -162,9 +163,11 @@
                 let $target = e.target || e.srcElement
                 let file = $target.files[0]
                 var reader = new FileReader()
+                reader.fileName=file.name
                 reader.onload = (data) => {
                     let res = data.target || data.srcElement
                     this.formValidate.avatar = res.result
+                    this.formValidate.avaName=data.target.fileName
                 }
                 reader.readAsDataURL(file)
             },

@@ -1,5 +1,5 @@
 <template>
-    <Scroll :height="avaiHeight" style="max-width: 480px; margin: 0 0 0 20px">
+    <Scroll :height="avaiHeight" style="max-width: 480px; margin: 0 0 0 20px; min-width: 460px">
         <card title="关于此贴的问答" icon="md-help" style="margin-top: 20px; margin-right: 50px;
          padding: 5px 0 0 5px; text-align: left">
             <CellGroup v-for="item in qlist" :key="item.questionId" style="padding: 0 0 10px 0;">

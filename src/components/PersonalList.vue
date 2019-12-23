@@ -64,7 +64,7 @@
                                     <Icon type="ios-star-outline" /> 收藏量 {{item.stars}}
                                 </li>
                                 <li>
-                                    <Button @click="deletePosting(item.postingId)">删除</Button>
+                                    <Button @click="deletePosting(item.postingId)" :disabled="editable">删除</Button>
                                 </li>
                             </template>
                         </ListItem>
@@ -87,7 +87,7 @@
                             </ListItemMeta>
                             <template slot="action">
                                 <li>
-                                    <Button type="primary" @click="unfollow(item.userId)">取消关注</Button>
+                                    <Button type="primary" @click="unfollow(item.userId)" :disabled="editable">取消关注</Button>
                                 </li>
                             </template>
                         </ListItem>
@@ -138,6 +138,11 @@
                     return false;
                 }
                 return true;
+            },
+            editable: function () {
+                if(this.$root.userId === this.$route.query.userId)
+                    return false
+                return true
             }
         },
         methods: {

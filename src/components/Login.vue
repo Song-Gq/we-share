@@ -7,7 +7,8 @@
                     <Input type="email" v-model="loginData.account" placeholder="请输入账号"/>
                 </FormItem>
                 <FormItem label="Password" prop="password">
-                    <Input type="password" v-model="loginData.password" placeholder="请输入密码"/>
+                    <Input type="password" v-model="loginData.password" placeholder="请输入密码"
+                           @keyup.enter.native="handleSubmit('loginData')"/>
                 </FormItem>
                 <FormItem class="form-footer">
                     <Button type="primary" @click="handleSubmit('loginData')">Submit</Button>
@@ -46,7 +47,9 @@
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        httpLogin.get(this.loginData.account,this.loginData.password,data=>{
+                        var encodePwd;
+                        encodePwd = window.btoa(this.loginData.password)
+                        httpLogin.get(this.loginData.account,encodePwd,data=>{
                             if(data['isSuccess']===0) {
                                 // window.console.log(data)
                                 // window.console.log(this.$root.hasLogin)

@@ -188,7 +188,7 @@
                     httpAppendPosting.get(this.$route.query.postingId, this.content, data=>{
                         if(data == 200) {
                             this.loading = false
-                            this.$Message.message('发布成功，将跳转至首页');
+                            this.$Message.success('发布成功，将跳转至首页');
                             this.$router.push({path: '/index'})
                         }
                         else {
@@ -200,7 +200,7 @@
                     httpSubmitPosting.get(this.formInline.title, this.tags, this.content, this.$root.userId, data=>{
                         if(data == 200) {
                             this.loading = false
-                            this.$Message.message('发布成功，将跳转至首页');
+                            this.$Message.success('发布成功，将跳转至首页');
                             this.$router.push({path: '/index'})
                         }
                         else {

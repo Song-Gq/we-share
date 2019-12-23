@@ -15,7 +15,8 @@
                 </FormItem>
                 <FormItem label="Password" prop="password">
                     <label>
-                        <Input type="password" v-model="registerData.password" placeholder="请输入密码"/>
+                        <Input type="password" v-model="registerData.password" placeholder="请输入密码"
+                               @keyup.enter.native="handleSubmit('registerData')"/>
                     </label>
                 </FormItem>
                 <FormItem class="form-footer">
@@ -59,10 +60,12 @@
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        httpRegister.get(this.registerData.account,this.registerData.name,this.registerData.password,data=>{
+                        var encodePwd;
+                        encodePwd = window.btoa(this.registerData.password)
+                        httpRegister.get(this.registerData.account,this.registerData.name,encodePwd,data=>{
                             // window.console.log(this.registerData.account)
                             if(data['isSuccess']===0){
-                                this.$Message.success('登录成功!')
+                                this.$Message.success('注册成功!')
                                 this.$root.hasLogin=true
                                 this.$root.userId=data['userId']
                                 this.$router.push({path:"index"})

@@ -1,7 +1,7 @@
 <template>
     <div style="display: flex; justify-content: space-between">
         <div dir="rtl">
-            <Scroll :height="avaiHeight" style="max-width: 1200px; margin: 0 20px 0 0">
+            <Scroll :height="avaiHeight" style="max-width: 1200px; margin: 0 20px 0 0; min-width: 1000px">
                 <div dir="ltr">
                     <card style="margin-top: 20px; margin-left: 50px; padding: 0 20px">
                         <List item-layout="vertical">
