@@ -7,10 +7,10 @@
                         <ListItem v-for="item in list" :key="item.postingId" style="text-align: left">
                             <ListItemMeta :avatar="item.avatar" >
                                 <template slot="description">
-                                    <router-link v-for="topic in item.topic" :key="topic.id"
-                                                 :to="{path: '/search', query:{ type: 'postingbytag', text: topic.id }}">
+                                    <router-link v-for="topic in item.topic" :key="topic.tagId"
+                                                 :to="{path: '/search', query:{ type: 'postingbytag', text: topic.tagId }}">
                                         <tag color="blue" >
-                                            {{topic.name}}
+                                            {{topic.tagName}}
                                         </tag>
                                     </router-link>
                                 </template>
@@ -45,7 +45,7 @@
                                 <Cell :title="item.tagName" extra="搜索该话题下的帖子"
                                       :to="{path: '/search', query:{ type: 'postingbytag', text: item.tagId }}" >
                                     <template slot="label">
-                                        话题ID: {{item.tagId}}
+<!--                                        话题: {{item.tagId}}-->
                                     </template>
                                 </Cell>
                             </CellGroup>

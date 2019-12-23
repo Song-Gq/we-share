@@ -55,7 +55,7 @@
                 get() {
                     if (this.$route.query.text !== undefined) {
                         if (this.$route.query.type == 'postingbytag')
-                            return '话题ID：' + this.$route.query.text
+                            return '话题：' + this.$route.query.text
                         return this.$route.query.text
                     }
                     else if(this.searchTextData !== "")
