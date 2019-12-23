@@ -14,6 +14,7 @@ import Question from "@/components/Question";
 import Answer from "@/components/Answer";
 import PersonalList from "@/components/PersonalList";
 import ChangeInfo from "@/components/ChangeInfo";
+import VueCookies from 'vue-cookies'
 
 const NotFound = { template: '<p>Page not found</p>' }
 
@@ -60,6 +61,7 @@ Vue.use(ViewUI, {
 Vue.use(VueRouter);
 // Vue.prototype.$hasLogin = hasLogin
 // Vue.prototype.$userId = userId
+Vue.use(VueCookies)
 
 new Vue({
     router,

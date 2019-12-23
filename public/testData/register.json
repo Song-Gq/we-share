@@ -1,6 +1,4 @@
 {
-  "registerRe": {
-    "isSuccess": 0,
-    "userId": 123
-  }
+  "isSuccess": 0,
+  "userId": 123
 }

@@ -10,13 +10,15 @@
     "install-devtools": "npm install -g @vue/devtools",
     "run-devtools": "vue-devtools",
     "install-editor": "npm install mavon-editor --save",
-    "install-axios": "npm install axios --save-dev"
+    "install-axios": "npm install axios --save-dev",
+    "install-cookies": "npm install vue-cookies --save"
   },
   "dependencies": {
     "core-js": "^3.4.3",
     "mavon-editor": "^2.7.7",
     "view-design": "^4.0.2",
-    "vue": "^2.6.10"
+    "vue": "^2.6.10",
+    "vue-cookies": "^1.6.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",

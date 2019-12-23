@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL=''||'testData';
+const baseURL='';
 
 const http=axios.create({
     baseURL:baseURL,
@@ -24,7 +24,7 @@ export default {
                 password: pwd
             }
         }).then(function (response) {
-            const result=response.data.list;
+            const result=response.data;
             callback(result)
         }).catch(function (error) {
             window.console.log(error);

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 配置了 url 则使用url；
 // 如未配置，则使用测试的数据。
-const baseURL = '' || 'testData';
+const baseURL = '';
 
 const http = axios.create({
     baseURL: baseURL,

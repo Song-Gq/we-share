@@ -73,7 +73,7 @@
                 <TabPane label="我的关注" :disabled="userTab" name="user">
                     <List>
                         <ListItem v-for="item in userList" :key="item.userId" style="text-align: left">
-                            <ListItemMeta   :description="item.intro">
+                            <ListItemMeta   :description="item.introduction">
                                 <template slot="avatar">
                                     <avatar :src="item.avatar" size="40"/>
                                 </template>
