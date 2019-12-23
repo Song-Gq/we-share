@@ -10,7 +10,7 @@
                 </div>
                 <Tooltip max-width="300" :content="user.intro">
                     <div class="text">
-                        <Icon type="ios-card" size="24"/>&nbsp;{{user.intro}}
+                        <Icon type="md-information-circle" size="24"/>&nbsp;{{user.intro}}
                     </div>
                 </Tooltip>
             </div>

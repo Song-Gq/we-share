@@ -15,7 +15,7 @@
                                     </router-link>
                                 </template>
                                 <template slot="title">
-                                    <router-link :to="{path: 'posting', query:{ postingId: item.postingId }}">
+                                    <router-link :to="{path: '/posting', query:{ postingId: item.postingId }}">
                                         {{ item.title }}
                                     </router-link>
                                 </template>
@@ -55,7 +55,7 @@
                 <TabPane :label="popularUser" :disabled="userTab" name="user">
                     <div style="text-align: left">
                         <CellGroup v-for="item in ulist" :key="item.userId" style="padding: 5px">
-                            <Cell :to="{path: '/personalpage', query:{ userid: item.userId }}" >
+                            <Cell :to="{path: '/personalpage', query:{ userId: item.userId }}" >
                                 <avatar :src="item.avatar" />
                                 <template>
                                     {{item.userName}}

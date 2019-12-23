@@ -8,9 +8,9 @@
       "views": 123,
       "stars": 123,
       "topic": [
-        {"id": 5, "name": "Topic1"},
-        {"id": 6, "name": "Topic2"},
-        {"id": 1, "name": "Topic3"}
+        {"tagId": 5, "tagName": "Topic1"},
+        {"tagId": 6, "tagName": "Topic2"},
+        {"tagId": 1, "tagName": "Topic3"}
       ],
       "avatar": "avatar/1.jpg",
       "userId": 12345
@@ -23,9 +23,9 @@
       "views": 123,
       "stars": 123,
       "topic": [
-        {"id": 5, "name": "Topic1"},
-        {"id": 6, "name": "Topic2"},
-        {"id": 1, "name": "Topic3"}
+        {"tagId": 5, "tagName": "Topic1"},
+        {"tagId": 6, "tagName": "Topic2"},
+        {"tagId": 1, "tagName": "Topic3"}
       ],
       "avatar": "avatar/2.jpg",
       "userId": 1232222222245
@@ -38,9 +38,9 @@
       "views": 123,
       "stars": 123,
       "topic": [
-        {"id": 5, "name": "Topic1"},
-        {"id": 6, "name": "Topic2"},
-        {"id": 1, "name": "Topic3"}
+        {"tagId": 5, "tagName": "Topic1"},
+        {"tagId": 6, "tagName": "Topic2"},
+        {"tagId": 1, "tagName": "Topic3"}
       ],
       "avatar": "avatar/3.jpg",
       "userId": 1233345
@@ -53,9 +53,9 @@
       "views": 123,
       "stars": 123,
       "topic": [
-        {"id": 5, "name": "Topic1"},
-        {"id": 6, "name": "Topic2"},
-        {"id": 1, "name": "Topic3"}
+        {"tagId": 5, "tagName": "Topic1"},
+        {"tagId": 6, "tagName": "Topic2"},
+        {"tagId": 1, "tagName": "Topic3"}
       ],
       "avatar": "avatar/4.jpg",
       "userId": 121144345
@@ -68,9 +68,9 @@
       "views": 123,
       "stars": 123,
       "topic": [
-        {"id": 5, "name": "Topic1"},
-        {"id": 6, "name": "Topic2"},
-        {"id": 1, "name": "Topic3"}
+        {"tagId": 5, "tagName": "Topic1"},
+        {"tagId": 6, "tagName": "Topic2"},
+        {"tagId": 1, "tagName": "Topic3"}
       ],
       "avatar": "avatar/5.jpg",
       "userId": 126655345

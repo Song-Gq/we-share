@@ -98,10 +98,14 @@
                 }
                 else {
                     this.submitLoading = true
-                    httpSubmitAnswer.get(this.questionId, this.answerText, this.$root.uesrId, data=>{
+                    httpSubmitAnswer.get(this.questionId, this.answerText, this.$root.userId, data=>{
                         if(data === 200) {
                             this.$Message.success('回答成功');
                             this.answerText = ''
+                            httpAnswer.get(this.questionId, 1, data=>{
+                                this.alist = data
+                                this.answerPage = 1
+                            })
                         }
                         else {
                             this.$Message.error('提交失败');

@@ -188,8 +188,8 @@
                     httpAppendPosting.get(this.$route.query.postingId, this.content, data=>{
                         if(data == 200) {
                             this.loading = false
-                            this.$Message.success('发布成功，将跳转至首页');
-                            this.$router.push({path: '/index'})
+                            this.$Message.success('盖楼成功，将跳转至帖子');
+                            this.$router.push({path: '/posting', query:{ postingId: this.$route.query.postingId }})
                         }
                         else {
                             this.$Message.error('发布错误');

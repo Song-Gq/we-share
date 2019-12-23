@@ -94,10 +94,15 @@
                 }
                 else {
                     this.submitLoading = true
-                    httpSubmitQuestion.get(this.postingId, this.questionText, this.$root.uesrId, data=>{
+                    window.console.log(this.$root.uesrId)
+                    httpSubmitQuestion.get(this.postingId, this.questionText, this.$root.userId, data=>{
                         if(data === 200) {
                             this.$Message.success('提问成功');
                             this.questionText = ''
+                            httpPostingList.get(this.postingId, 0, 1, data=>{
+                                this.qlist = data.list
+                                this.questionPage = 1
+                            })
                         }
                         else {
                             this.$Message.error('提问失败');

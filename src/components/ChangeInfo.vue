@@ -1,7 +1,7 @@
 <template>
     <div style="width: 800px;margin: 20px auto 0 auto;padding:20px 20px;background: snow">
         <div style="display: flex">
-            <Button type="dashed" to="/personalPage">
+            <Button type="dashed" :to="{path: '/personalPage', query:{ userId: this.$root.userId}}">
                 <Icon type="ios-arrow-back" />
                 Backward
             </Button>
@@ -53,7 +53,7 @@
 <!--                    </CheckboxGroup>-->
 <!--                </FormItem>-->
                 <FormItem label="简介" prop="desc">
-                    <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows: 2,maxRows: 5}"
+                    <Input v-model="formValidate.desc" type="textarea" :autosize="{maxRows: 5}"
                            placeholder="Enter something to introduce yourself"/>
                 </FormItem>
                 <FormItem>

@@ -6,7 +6,7 @@
                     <card style="margin-top: 20px; margin-left: 50px; padding: 0 20px">
                         <List item-layout="vertical">
                             <ListItem :key="postingId" style="text-align: left; display: flex">
-                                <ListItemMeta :avatar="posting.avatar" :title="posting.title" >
+                                <ListItemMeta :title="posting.title" :avatar="posting.avatar" >
                                     <template slot="description" v-for="topic in posting.topic">
                                         {{topic}}
                                     </template>
@@ -17,6 +17,9 @@
                                     </li>
                                     <li @click="star">
                                         <Icon type="md-star" /> 收藏帖子
+                                    </li>
+                                    <li @click="toPersonal">
+                                        <Icon type="md-eye" /> 查看用户
                                     </li>
                                 </template>
                             </ListItem>
@@ -136,13 +139,16 @@
                     this.$Message.warning("不能关注自己的帖子")
                 }
                 else {
-                    httpStar.get(this.posting.postingId, this.$root.userId, data=>{
+                    httpStar.get(this.postingId, this.$root.userId, data=>{
                         if(data === 200)
                             this.$Message.success("收藏成功")
                         else
                             this.$Message.warning("已在收藏列表")
                     })
                 }
+            },
+            toPersonal() {
+                this.$router.push({path: '/personalpage', query:{ userId: this.posting.posterId }})
             }
         },
         mounted(){

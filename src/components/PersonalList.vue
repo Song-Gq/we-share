@@ -7,10 +7,10 @@
                         <ListItem v-for="item in favoriteList" :key="item.postingId" style="text-align: left">
                             <ListItemMeta :avatar="item.avatar" >
                                 <template slot="description">
-                                    <router-link v-for="topic in item.topic" :key="topic.id"
-                                                 :to="{path: '/search', query:{ type: 'postingbytag', text: topic.id }}">
+                                    <router-link v-for="topic in item.topic" :key="topic.tagId"
+                                                 :to="{path: '/search', query:{ type: 'postingbytag', text: topic.tagId }}">
                                         <tag color="blue" >
-                                            {{topic.name}}
+                                            {{topic.tagName}}
                                         </tag>
                                     </router-link>
                                 </template>
@@ -43,10 +43,10 @@
                         <ListItem v-for="item in postList" :key="item.postingId" style="text-align: left">
                             <ListItemMeta avatar="" >
                                 <template slot="description">
-                                    <router-link v-for="topic in item.topic" :key="topic.id"
-                                                 :to="{path: '/search', query:{ type: 'postingbytag', text: topic.id }}">
+                                    <router-link v-for="topic in item.topic" :key="topic.tagId"
+                                                 :to="{path: '/search', query:{ type: 'postingbytag', text: topic.tagId }}">
                                         <tag color="blue" >
-                                            {{topic.name}}
+                                            {{topic.tagName}}
                                         </tag>
                                     </router-link>
                                 </template>
@@ -80,7 +80,7 @@
                                 <template slot="title">
                                     <router-link :to="{path: '/personalPage', query:{ userId: item.userId }}">
                                         <div style="font-size:24px">
-                                            {{ item.username }}
+                                            {{ item.userName }}
                                         </div>
                                     </router-link>
                                 </template>
@@ -115,7 +115,10 @@
                 favoriteList: [],
                 postList:[],
                 userList:[],
-                tabType: 'posting'
+                tabType: 'posting',
+                favorPage: 0,
+                focusPage: 0,
+                postPage: 0
             }
         },
         computed: {
@@ -149,41 +152,30 @@
             handleReachBottom () {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        const last = this.favoriteList.length;
-                        var idx;
-                        for (let i = 1; i < 6; i++) {
-                            idx = last + i;
-                            if (this.tabType === 'posting') {
-                                this.favoriteList.push({
-                                    postingId: 'posting id ' + idx,
-                                    title: "This is title " + idx,
-                                    topic: [ 'Topic1', 'Topic2', 'Topic3' ],
-                                    avatar: require('../assets/avatar/' + idx + '.jpg'),
-                                    content: 'This is the content, this is the content, this is the content, this is the content.',
-                                    pic: require('../assets/pic/' + idx + '.jpg'),
-                                });
-                            }
-                            else if (this.tabType === 'topic') {
-                                this.postList.push({
-                                    postingId: 'posting id ' + idx,
-                                    title: "This is title " + idx,
-                                    topic: [ 'Topic1', 'Topic2', 'Topic3' ],
-                                    avatar: require('../assets/avatar/' + idx + '.jpg'),
-                                    content: 'This is the content, this is the content, this is the content, this is the content.',
-                                    pic: require('../assets/pic/' + idx + '.jpg'),
-                                });
-                            }
-                            else if (this.tabType === 'user') {
-                                this.userList.push({
-                                    userName: 'newusername' + idx,
-                                    userId: 'newuserid' + idx,
-                                    avatar: require('../assets/avatar/' + idx + '.jpg')
-                                });
-                            }
+                        if (this.tabType === 'posting') {
+                            httpPersonPage.getMyPage(this.$root.userId,'myFavorite',
+                                this.favorPage, data=>{
+                                    for (let idx in data)
+                                        this.favoriteList.push(data[idx])
+                            })
+                        }
+                        else if (this.tabType === 'topic') {
+                            httpPersonPage.getMyPage(this.$root.userId,'myPost',
+                                this.postPage, data=>{
+                                    for (let idx in data)
+                                        this.postList.push(data[idx])
+                                })
+                        }
+                        else if (this.tabType === 'user') {
+                            httpPersonPage.getMyPage(this.$root.userId,'myFocus',
+                                this.focusPage, data=>{
+                                    for (let idx in data)
+                                        this.userList.push(data[idx])
+                                })
                         }
                         resolve();
                         this.loading = false
-                    }, 2000);
+                    }, 10);
                 });
             },
             pageResize(){
@@ -243,6 +235,9 @@
                     else if(type==='myFocus')
                         this.userList=data
                 })
+                this.favorPage = 1;
+                this.postPage = 1;
+                this.focusPage = 1;
             }
         },
         created(){
