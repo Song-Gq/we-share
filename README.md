@@ -71,6 +71,10 @@ see https://www.iviewui.com/
   * public/testData下新增测试接口用json  
   * src/api下新增接口处理的js文件  
   * 上传package.json  
+* 12/21  
+  * 完善盖楼，提问，回答功能  
+  * 完善axios请求  
+  * 识别用户登录状态  
 
 ## Project setup
 ```
@@ -94,3 +98,4 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+

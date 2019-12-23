@@ -6,17 +6,21 @@
                     <card style="margin-top: 20px; margin-left: 50px; padding: 0 20px">
                         <List item-layout="vertical">
                             <ListItem :key="postingId" style="text-align: left; display: flex">
-                                <ListItemMeta :avatar="posting.avatar" :title="posting.title" :description="posting.topic" />
+                                <ListItemMeta :avatar="posting.avatar" :title="posting.title" >
+                                    <template slot="description" v-for="topic in posting.topic">
+                                        {{topic}}
+                                    </template>
+                                </ListItemMeta>
                                 <template slot="action">
-                                    <li>
+                                    <li @click="follow">
                                         <Icon type="md-add" /> 关注用户
                                     </li>
-                                    <li>
+                                    <li @click="star">
                                         <Icon type="md-star" /> 收藏帖子
                                     </li>
                                 </template>
                             </ListItem>
-                            <ListItem v-for="item in list" :key="item.contentIdx" style="text-align: left">
+                            <ListItem v-for="item in list" :key="item.time" style="text-align: left">
                                 <ListItemMeta :description="item.time" />
                                 {{ item.content }}
                                 <template slot="extra" style="max-height: fit-content">
@@ -30,165 +34,72 @@
                         <span v-if="!loading">加载更多</span>
                         <span v-else>Loading...</span>
                     </Button>
+                    <Button type="primary" icon="md-hammer" @click="append"
+                            shape="circle" style="margin: 20px" :disabled="!ableToAppend">
+                        <span v-if="!ableToAppend">只有贴主才可以盖楼</span>
+                        <span v-else>盖楼</span>
+                    </Button>
                 </div>
             </Scroll>
         </div>
         <router-view></router-view>
-<!--        <Scroll :height="avaiHeight" style="max-width: 600px; margin: 0 0 0 20px">
-            <card title="关于此贴的问答" icon="md-help" style="margin-top: 20px; margin-right: 10px; padding: 0 20px">
-                <Timeline>
-                    <TimelineItem v-for="item in qlist" :key="item.questionIdx" style="text-align: left;">
-                        <router-link to="">
-                            <p class="question">{{item.content}}</p>
-                        </router-link>
-                        &lt;!&ndash;<a :href="item.content"><p class="questioner">{{item.questionerId}}</p></a>&ndash;&gt;
-                        <p class="questioner">{{item.questionerId}}</p>
-                    </TimelineItem>
-                </Timeline>
-&lt;!&ndash;                <List item-layout="vertical">
-&lt;!&ndash;                    <ListItem :key="postingId" style="text-align: left">
-                        <Icon type="md-help" />
-                        关于此贴的问答
-                    </ListItem>&ndash;&gt;
-                    <ListItem v-for="item in qlist" :key="item.contentIdx" style="text-align: left">
-                        <ListItemMeta :description="item.time" />
-                        {{ item.content }}
-                    </ListItem>
-                </List>&ndash;&gt;
-            </card>
-            <Button type="primary" :loading="loadingQlist" icon="ios-more" @click="toLoadingQlist"
-                    shape="circle" style="margin: 20px auto">
-                <span v-if="!loadingQlist">加载更多</span>
-                <span v-else>Loading...</span>
-            </Button>
-        </Scroll>-->
     </div>
 </template>
 
 <script>
+    import httpPostingList from "@/api/httpPostingList";
+    import httpFollow from "@/api/httpFollow";
+    import httpStar from "@/api/httpStar";
+
     export default {
         name: "Posting",
         data () {
             return {
-                posting: {
-                    avatar: require('../assets/avatar/1.jpg'),
-                    title: 'posting title',
-                    topic: 'topic 1 2 3',
-                    pic: require('../assets/pic/1.jpg')
-                },
-                list: [
-                    {
-                        contentIdx: '1',
-                        time: '2019/12/10 14:53:12.00',
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/1.jpg'),
-                    },
-                    {
-                        contentIdx: '2',
-                        time: '2019/12/10 14:53:13.11',
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/2.jpg'),
-                    },
-                    {
-                        contentIdx: '3',
-                        time: '2019/12/10 14:53:14.22',
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/3.jpg'),
-                    },
-                    {
-                        contentIdx: '4',
-                        time: '2019/12/10 14:53:15.33',
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/4.jpg'),
-                    },
-                    {
-                        contentIdx: '5',
-                        time: '2019/12/10 14:53:16.44',
-                        content: 'This is the content, this is the content, this is the content, this is the content.',
-                        pic: require('../assets/pic/5.jpg'),
-                    }
-                ],
-/*                qlist: [
-                    {
-                        questionIdx: '1',
-                        time: '2019/12/10 14:53:12.00',
-                        content: 'This is the question, this is the question, this is the question, this is the question.',
-                        questionerId: 'q id 1'
-                    },
-                    {
-                        questionIdx: '2',
-                        time: '2019/12/10 14:53:13.11',
-                        content: 'This is the question, this is the question, this is the question, this is the question.',
-                        questionerId: 'q id 2'
-                    },
-                    {
-                        questionIdx: '3',
-                        time: '2019/12/10 14:53:14.22',
-                        content: 'This is the question, this is the question, this is the question, this is the question.',
-                        questionerId: 'q id 3'
-                    },
-                    {
-                        questionIdx: '4',
-                        time: '2019/12/10 14:53:15.33',
-                        content: 'This is the question, this is the question, this is the question, this is the question.',
-                        questionerId: 'q id 4'
-                    },
-                    {
-                        questionIdx: '5',
-                        time: '2019/12/10 14:53:16.44',
-                        content: 'This is the question, this is the question, this is the question, this is the question.',
-                        questionerId: 'q id 5'
-                    }
-                ],*/
                 avaiHeight: document.documentElement.clientHeight - 60,
                 loading: false,
-/*                loadingQlist: false*/
+                posting: [],
+                list: [],
+                postingPage: 0,
+                // hasLogin: this.$hasLogin
+                // userId: this.$userId
             }
         },
         computed: {
             postingId: function () {
                 return this.$route.query.postingId
+            },
+            ableToAppend: function () {
+                if(this.$root.hasLogin && this.$root.userId === this.posting.posterId)
+                    return true
+                return false
             }
         },
         methods: {
             handleReachBottom () {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        const last = this.list.length;
-                        var idx;
-                        for (let i = 1; i < 6; i++) {
-                            idx = last + i;
-                            this.list.push({
-                                contentIdx: idx,
-                                time: "This is time " + idx,
-                                content: 'This is the content, this is the content, this is the content, this is the content.',
-                                pic: require('../assets/pic/' + idx + '.jpg'),
-                            });
-                        }
+                        httpPostingList.get(this.postingId, this.postingPage + 1,
+                            0 ,data=>{
+                                for (let idx in data.list)
+                                    this.list.push(data.list[idx])
+                                this.postingPage += 1
+                        })
+                        // const last = this.list.length;
+                        // var idx;
+                        // for (let i = 1; i < 6; i++) {
+                        //     idx = last + i;
+                        //     this.list.push({
+                        //         contentIdx: idx,
+                        //         time: "This is time " + idx,
+                        //         content: 'This is the content, this is the content, this is the content, this is the content.',
+                        //         pic: require('../assets/pic/' + idx + '.jpg'),
+                        //     });
+                        // }
                         resolve();
                         this.loading = false
-                    }, 2000);
+                    }, 10);
                 });
             },
-/*            handleReachBottomQlist () {
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        const last = this.qlist.length;
-                        var idx;
-                        for (let i = 1; i < 6; i++) {
-                            idx = last + i;
-                            this.qlist.push({
-                                questionIdx: idx,
-                                time: "This is time " + idx,
-                                content: 'This is the question, this is the question, this is the question, this is the question.',
-                                questionerId: 'q id ' + idx
-                            });
-                        }
-                        resolve();
-                        this.loadingQlist = false
-                    }, 2000);
-                });
-            },*/
             pageResize(){
                 this.$nextTick(()=>{
                     this.avaiHeight = document.documentElement.clientHeight - 60
@@ -198,10 +109,41 @@
                 this.loading = true
                 this.handleReachBottom()
             },
-/*            toLoadingQlist(){
-                this.loadingQlist = true
-                this.handleReachBottomQlist()
-            }*/
+            append() {
+                this.$router.push({path: '/edit', query: { postingId: this.postingId }})
+            },
+            follow() {
+                if(this.$root.hasLogin !== true) {
+                    this.$Message.warning("需要登录")
+                }
+                else if (this.$root.userId === this.posting.posterId) {
+                    this.$Message.warning("不能关注自己")
+                }
+                else {
+                    httpFollow.get(this.posting.posterId, this.$root.userId, data=>{
+                        if(data === 200)
+                            this.$Message.success("关注成功")
+                        else
+                            this.$Message.warning("已在关注列表")
+                    })
+                }
+            },
+            star() {
+                if(this.$root.hasLogin !== true) {
+                    this.$Message.warning("需要登录")
+                }
+                else if (this.$root.userId === this.posting.posterId) {
+                    this.$Message.warning("不能关注自己的帖子")
+                }
+                else {
+                    httpStar.get(this.posting.postingId, this.$root.userId, data=>{
+                        if(data === 200)
+                            this.$Message.success("收藏成功")
+                        else
+                            this.$Message.warning("已在收藏列表")
+                    })
+                }
+            }
         },
         mounted(){
             let _this = this;
@@ -220,6 +162,13 @@
         },
         destroyed(){
             window.onresize = null;
+        },
+        created() {
+            httpPostingList.get(this.postingId, 1, 0, data=>{
+                this.list = data.list
+                this.posting = data.posting
+                this.postingPage = 1
+            })
         }
     }
 

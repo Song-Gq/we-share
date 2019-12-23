@@ -78,7 +78,7 @@
 </template>
 
 <script>
-    import httpPop from "@/api/httpPop";
+    import httpPopList from "@/api/httpPopList";
     import httpSearch from "@/api/httpSearch";
 
     export default {
@@ -90,7 +90,8 @@
                 tabTypeData: "",
                 list: [],
                 tlist: [],
-                ulist: []
+                ulist: [],
+                curPage: 0
             }
         },
         computed: {
@@ -186,37 +187,68 @@
             handleReachBottom () {
                 return new Promise(resolve => {
                     setTimeout(() => {
-                        const last = this.list.length;
-                        var idx;
-                        for (let i = 1; i < 6; i++) {
-                            idx = last + i;
-                            if (this.tabType === 'posting') {
-                                this.list.push({
-                                    postingId: 'posting id ' + idx,
-                                    title: "This is title " + idx,
-                                    topic: [ 'Topic1', 'Topic2', 'Topic3' ],
-                                    avatar: require('../assets/avatar/' + idx + '.jpg'),
-                                    content: 'This is the content, this is the content, this is the content, this is the content.',
-                                    pic: require('../assets/pic/' + idx + '.jpg'),
-                                });
-                            }
-                            else if (this.tabType === 'topic') {
-                                this.tlist.push({
-                                    tagName: 'newtagname' + idx,
-                                    tagId: 'newtagid' + idx
-                                });
-                            }
-                            else if (this.tabType === 'user') {
-                                this.ulist.push({
-                                    userName: 'newusername' + idx,
-                                    userId: 'newuserid' + idx,
-                                    avatar: require('../assets/avatar/' + idx + '.jpg')
-                                });
-                            }
+                        if (this.$route.query.type === undefined) {
+                            httpPopList.get(this.tabType, this.curPage + 1, data=>{
+                                if(this.tabType === 'posting') {
+                                    for (let idx in data)
+                                        this.list.push(data[idx])
+                                }
+                                else {
+                                    for (let idx in data)
+                                        this.tlist.push(data[idx])
+                                }
+                                this.curPage += 1
+                            })
                         }
+                        else {
+                            httpSearch.get(this.$route.query.type, this.$route.query.text,
+                                this.curPage + 1, data=>{
+                                    if(this.tabType === 'topic') {
+                                        for (let idx in data)
+                                            this.tlist.push(data[idx])
+                                    }
+                                    else if(this.tabType === 'user') {
+                                        for (let idx in data)
+                                            this.ulist.push(data[idx])
+                                    }
+                                    else {
+                                        for (let idx in data)
+                                            this.list.push(data[idx])
+                                    }
+                                    this.curPage += 1
+                            })
+                        }
+                        // const last = this.list.length;
+                        // var idx;
+                        // for (let i = 1; i < 6; i++) {
+                        //     idx = last + i;
+                        //     if (this.tabType === 'posting') {
+                        //         this.list.push({
+                        //             postingId: 'posting id ' + idx,
+                        //             title: "This is title " + idx,
+                        //             topic: [ 'Topic1', 'Topic2', 'Topic3' ],
+                        //             avatar: require('../assets/avatar/' + idx + '.jpg'),
+                        //             content: 'This is the content, this is the content, this is the content, this is the content.',
+                        //             pic: require('../assets/pic/' + idx + '.jpg'),
+                        //         });
+                        //     }
+                        //     else if (this.tabType === 'topic') {
+                        //         this.tlist.push({
+                        //             tagName: 'newtagname' + idx,
+                        //             tagId: 'newtagid' + idx
+                        //         });
+                        //     }
+                        //     else if (this.tabType === 'user') {
+                        //         this.ulist.push({
+                        //             userName: 'newusername' + idx,
+                        //             userId: 'newuserid' + idx,
+                        //             avatar: require('../assets/avatar/' + idx + '.jpg')
+                        //         });
+                        //     }
+                        // }
                         resolve();
                         this.loading = false
-                    }, 2000);
+                    }, 10);
                 });
             },
             pageResize(){
@@ -234,11 +266,11 @@
                 this.ulist = undefined
 
                 if (this.$route.path.substr(1).split('/')[0] === 'index') {
-                    httpPop.get('posting', '1', data => {
+                    httpPopList.get('posting', '1', data => {
                         //window.console.log(data)
                         this.list = data
                     })
-                    httpPop.get('topic', '1', data => {
+                    httpPopList.get('topic', '1', data => {
                         //window.console.log(data)
                         this.tlist = data
                     })
@@ -255,6 +287,7 @@
                             this.ulist = data
                     })
                 }
+                this.curPage = 1
             }
         },
         created(){

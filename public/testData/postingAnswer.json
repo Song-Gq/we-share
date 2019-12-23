@@ -1,0 +1,34 @@
+{
+  "list": [
+    {
+      "time": "2019/12/10 14:53:12.00",
+      "content": "This is the answer, this is the answer, this is the answer, this is the answer.",
+      "answererId": 1,
+      "avatarDir": "avatar/2.jpg"
+    },
+    {
+      "time": "2019/12/10 14:53:13.11",
+      "content": "This is the answer, this is the answer, this is the answer, this is the answer.",
+      "answererId": 2,
+      "avatarDir": "avatar/2.jpg"
+    },
+    {
+      "time": "2019/12/10 14:53:14.22",
+      "content": "This is the answer, this is the answer, this is the answer, this is the answer.",
+      "answererId": 3,
+      "avatarDir": "avatar/2.jpg"
+    },
+    {
+      "time": "2019/12/10 14:53:15.33",
+      "content": "This is the answer, this is the answer, this is the answer, this is the answer.",
+      "answererId": 4,
+      "avatarDir": "avatar/2.jpg"
+    },
+    {
+      "time": "2019/12/10 14:53:16.44",
+      "content": "This is the answer, this is the answer, this is the answer, this is the answer.",
+      "answererId": 5,
+      "avatarDir": "avatar/2.jpg"
+    }
+  ]
+}

@@ -1,19 +1,22 @@
 <template>
-    <div>
+    <div style="position: relative; z-index: 0">
         <Form ref="formInline" :model="formInline" :rules="ruleInline" inline>
-            <FormItem prop="title" style="margin: 30px 0 0 30px; display: flex; justify-content: left;">
-                <i-input type="text" v-model="formInline.title" placeholder="标题" style="width: 600px;">
+            <FormItem prop="title" style="margin: 30px 0 0 30px; display: flex; justify-content: left;" >
+                <i-input type="text" v-model="formInline.title" :placeholder="titleInputText"
+                         style="width: 600px;" :disabled="ifAppend">
                     <Icon type="md-text" slot="prepend"></Icon>
                 </i-input>
             </FormItem>
-            <FormItem prop="tagAry" style="display: flex; justify-content: left; margin: 30px 0 0 30px">
+            <FormItem prop="tagAry" style="display: flex; justify-content: left; margin: 30px 0 0 30px" >
                 <div style="display: flex; justify-content: left; align-content: center;">
                     <Tag type="dot" closable color="primary"
-                         v-for="item in tags" :key="item.tagId" :name="item.tagName" @on-close="handleClose" >
-                        {{ item.tagName }}
+                         v-for="tagName in tags" :key="tagName" :name="tagName" @on-close="handleClose" >
+                        {{ tagName }}
                     </Tag>
-                    <i-input v-model="newTagText" style="width: 200px; margin: 1px" @on-enter="handleAdd">
-                        <Button slot="append" icon="ios-add" type="dashed" size="small" @click="handleAdd">添加标签</Button>
+                    <i-input v-model="newTagText" style="width: 200px; margin: 1px" @on-enter="handleAdd" :disabled="ifAppend">
+                        <Button slot="append" icon="ios-add" type="dashed" size="small" @click="handleAdd" :disabled="ifAppend">
+                            {{ addTagText }}
+                        </Button>
                     </i-input>
                 </div>
             </FormItem>
@@ -38,6 +41,8 @@
 <script>
     import { mavonEditor } from 'mavon-editor'
     import 'mavon-editor/dist/css/index.css'
+    import httpSubmitPosting from "@/api/httpSubmitPosting";
+    import httpAppendPosting from "@/api/httpAppendPosting";
     export default {
         name: "Edit",
         props: [],
@@ -96,7 +101,36 @@
                     title: '',
                     tagAry: []
                 },
-                ruleInline: {
+                // ruleInline: {
+                //     title: this.titleRule,
+                //     tagAry: this.tagRule
+                // },
+                userId: -1
+            }
+        },
+        components: {
+            mavonEditor,
+        },
+        computed: {
+            ifAppend: function () {
+                if(this.$route.query.postingId !== undefined)
+                    return true
+                return false
+            },
+            addTagText: function () {
+                if(this.$route.query.postingId !== undefined)
+                    return '盖楼无需添加话题'
+                return "添加话题"
+            },
+            titleInputText: function () {
+                if(this.$route.query.postingId !== undefined)
+                    return '盖楼无需添加标题'
+                return "标题"
+            },
+            ruleInline: function () {
+                if(this.$route.query.postingId !== undefined)
+                    return {}
+                return {
                     title: [
                         { required: true, message: '请输入标题', trigger: 'blur' }
                     ],
@@ -106,9 +140,6 @@
                     ]
                 }
             }
-        },
-        components: {
-            mavonEditor,
         },
         methods: {
             // 绑定@imgAdd event
@@ -153,6 +184,26 @@
             // 提交
             submit(){
                 this.loading = true
+                if(this.$route.query.postingId !== undefined) {
+                    httpAppendPosting.get(this.$route.query.postingId, this.content, data=>{
+                        if(data == 200) {
+                            this.loading = false
+                        }
+                        else {
+                            // fail
+                        }
+                    })
+                }
+                else {
+                    httpSubmitPosting.get(this.formInline.title, this.tags, this.content, this.$root.userId, data=>{
+                        if(data == 200) {
+                            this.loading = false
+                        }
+                        else {
+                            // fail
+                        }
+                    })
+                }
 /*                window.console.log(this.content);
                 window.console.log(this.html);
                 this.$message.success('提交成功，已打印至控制台！');*/
@@ -183,7 +234,7 @@
                     return;
                 }
                 for(this.key in this.tags) {
-                    if(this.tags[this.key].tagName === this.newTagText) {
+                    if(this.tags[this.key] === this.newTagText) {
                         this.$Message['warning']({
                             background: true,
                             content: '话题已存在'
@@ -191,18 +242,26 @@
                         return;
                     }
                 }
-                this.tags.push({tagId: this.tags.length + this.newTagText, tagName: this.newTagText})
+                this.tags.push(this.newTagText)
                 this.formInline.tagAry.push("");
                 this.newTagText = ""
             },
             handleClose (event, name) {
                 for(this.key in this.tags) {
-                    if(this.tags[this.key].tagName === name) {
+                    if(this.tags[this.key] === name) {
                         this.tags.splice(this.key, 1);
                         this.formInline.tagAry.pop();
                         return;
                     }
                 }
+            }
+        },
+        mounted() {
+            if(this.$root.hasLogin === false) {
+                this.$nextTick(()=>{
+                    this.$Message.error('请先登录');
+                    this.$router.push({path: 'login'})
+                })
             }
         }
 

@@ -105,7 +105,13 @@
                 this.active = this.$route.path.substr(1).split('/')[0]
                 this.$refs.menu.updateActiveName()
             })
-        }
+        },
+        watch: {
+            '$route'() {
+                // 对路由变化作出响应...
+                this.outFocus()
+            }
+        },
     }
 </script>
 
