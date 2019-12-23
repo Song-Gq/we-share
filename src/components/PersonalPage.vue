@@ -27,17 +27,31 @@
 
 <script>
     import PersonalList from "@/components/PersonalList";
+    import httpPersonPage from "@/api/httpPersonPage";
     export default {
         name: "PersonalPage",
         components: {PersonalList},
         data(){
             return {
                 user: {
-                        avatar:require('../assets/avatar/1.jpg'),
-                        username:"user1",
-                        intro:"a single dog.a bad dog.a good boy."
+                        avatar:'',
+                        username:'',
+                        intro:''
                 }
             }
+        },
+        methods:{
+           showInfo(){
+               if(this.$root.hasLogin===true)
+                   httpPersonPage.getUserInfo(this.$root.userId,data=>{
+                       this.user.avatar=data['avatar']
+                       this.user.username=data['userName']
+                       this.user.intro=data['introduction']
+                   })
+           }
+        },
+        created(){
+            this.showInfo()
         }
     }
 </script>
@@ -50,7 +64,6 @@
         justify-content:flex-start;
         -webkit-justify-content: flex-start;
         align-items: center;
-        border: 1px solid purple;
         width: 1000px;
         height: 200px;
         margin: 20px auto 0 auto;
@@ -77,7 +90,8 @@
         text-overflow: ellipsis;/*文字隐藏后添加省略号*/
         /*white-space: nowrap;/*强制不换行*/
         width: 20em;/*不允许出现半汉字截断*/
-        color:#6699ff;border:1px #ff8000 dashed;
+        color:#6699ff;
+        /*border:1px #ff8000 dashed;*/
         display: -webkit-box;
         -webkit-line-clamp:3; /*想要显示的行数*/
         -webkit-box-orient: vertical;

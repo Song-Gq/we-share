@@ -3,7 +3,7 @@
         <div class="from-wrap">
             <h2>登录</h2>
             <Form ref="loginData" :model="loginData" :rules="ruleValidate" :label-width="80">
-                <FormItem label="Account" prop="account">
+                <FormItem label="Email" prop="account">
                     <Input type="email" v-model="loginData.account" placeholder="请输入账号"/>
                 </FormItem>
                 <FormItem label="Password" prop="password">
@@ -20,6 +20,8 @@
 </template>
 
 <script>
+    import httpLogin from "@/api/httpLogin";
+
     export default {
         name:"Login",
         data () {
@@ -37,17 +39,29 @@
                         { required: true, message: '密码不能为空', trigger: 'blur' },
                         { type: 'string', min: 6, max: 16, message: '密码长度6-16个字符', trigger: 'blur' }
                     ]
-                }
+                },
             }
         },
         methods: {
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('登录成功!');
-                        this.$router.push({path:"index"})
+                        httpLogin.get(this.loginData.account,this.loginData.password,data=>{
+                            if(data['isSuccess']===0) {
+                                // window.console.log(data)
+                                // window.console.log(this.$root.hasLogin)
+                                this.$Message.success('登录成功!')
+                                this.$root.hasLogin=true
+                                this.$root.userId=data['userId']
+                                // window.console.log(this.$root.hasLogin)
+                                this.$router.push({path:"index"})
+                            }
+                            else {
+                                this.$Message.error('登录失败，账户或密码错误!')
+                            }
+                        })
                     } else {
-                        this.$Message.error('账户或密码错误!')
+                        this.$Message.error('输入信息格式错误!')
                     }
                 })
             },

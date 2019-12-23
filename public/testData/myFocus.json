@@ -1,0 +1,28 @@
+{
+  "list":[
+    {
+      "userId":"001",
+      "avatar": "avatar/1.jpg",
+      "username":"user1",
+      "intro":"a single dog.a bad dog.a good boy. Waiting for connection to localhost:52956."
+    },
+    {
+      "userId":"002",
+      "avatar": "avatar/2.jpg",
+      "username":"user2",
+      "intro":"a single dog.a bad dog.a good boy."
+    },
+    {
+      "userId":"0031",
+      "avatar": "avatar/3.jpg",
+      "username":"user3",
+      "intro":"a single dog.a bad dog.a good boy."
+    },
+    {
+      "userId":"011",
+      "avatar": "avatar/11.jpg",
+      "username":"user11",
+      "intro":"a student of Peking university, handsome and tall"
+    }
+  ]
+}
