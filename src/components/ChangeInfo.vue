@@ -53,7 +53,7 @@
 <!--                    </CheckboxGroup>-->
 <!--                </FormItem>-->
                 <FormItem label="简介" prop="desc">
-                    <Input v-model="formValidate.desc" type="textarea" :autosize="{maxRows: 5}"
+                    <Input v-model="formValidate.desc" type="textarea" :autosize="{minRows:2, maxRows: 5}"
                            placeholder="Enter something to introduce yourself"/>
                 </FormItem>
                 <FormItem>
@@ -111,7 +111,7 @@
                     ],
                     desc: [
                         { required: true, message: 'Please enter a personal introduction', trigger: 'blur' },
-                        { type: 'string', min: 10, message: 'Introduce no less than 20 words', trigger: 'blur' }
+                        // { type: 'string', min: 10, message: 'Introduce no less than 20 words', trigger: 'blur' }
                     ]
                 }
             }

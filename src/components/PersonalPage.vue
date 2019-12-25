@@ -42,12 +42,11 @@
         },
         methods:{
            showInfo(){
-               if(this.$root.hasLogin===true)
-                   httpPersonPage.getUserInfo(this.$route.query.userId,data=>{
-                       this.user.avatar=data['avatar']
-                       this.user.username=data['userName']
-                       this.user.intro=data['introduction']
-                   })
+               httpPersonPage.getUserInfo(this.$route.query.userId,data=>{
+                   this.user.avatar=data['avatar']
+                   this.user.username=data['userName']
+                   this.user.intro=data['introduction']
+               })
            }
         },
         created(){

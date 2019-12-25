@@ -153,21 +153,21 @@
                 return new Promise(resolve => {
                     setTimeout(() => {
                         if (this.tabType === 'posting') {
-                            httpPersonPage.getMyPage(this.$root.userId,'myFavorite',
+                            httpPersonPage.getMyPage(this.$route.query.userId,'myFavorite',
                                 this.favorPage, data=>{
                                     for (let idx in data)
                                         this.favoriteList.push(data[idx])
                             })
                         }
                         else if (this.tabType === 'topic') {
-                            httpPersonPage.getMyPage(this.$root.userId,'myPost',
+                            httpPersonPage.getMyPage(this.$route.query.userId,'myPost',
                                 this.postPage, data=>{
                                     for (let idx in data)
                                         this.postList.push(data[idx])
                                 })
                         }
                         else if (this.tabType === 'user') {
-                            httpPersonPage.getMyPage(this.$root.userId,'myFocus',
+                            httpPersonPage.getMyPage(this.$route.query.userId,'myFocus',
                                 this.focusPage, data=>{
                                     for (let idx in data)
                                         this.userList.push(data[idx])
@@ -227,7 +227,7 @@
                 var type=this.changeType()
                 // window.console.log(type)
 
-                httpPersonPage.getMyPage(this.$root.userId,type,'1', data=>{
+                httpPersonPage.getMyPage(this.$route.query.userId,type,'1', data=>{
                     if(type==='myFavorite')
                         this.favoriteList=data
                     else if(type==='myPost')
