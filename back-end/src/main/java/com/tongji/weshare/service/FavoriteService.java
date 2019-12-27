@@ -5,6 +5,7 @@ import com.tongji.weshare.entity.FavoriteExample;
 import com.tongji.weshare.mapper.FavoriteMapper;
 import org.springframework.stereotype.Service;
 
+import java.awt.datatransfer.FlavorMap;
 import java.util.List;
 
 @Service
@@ -20,5 +21,9 @@ public class FavoriteService {
 
     public int newFavorite(Favorite favorite) {
         return favoriteMapper.insert(favorite);
+    }
+
+    public long countFavorites(FavoriteExample example) {
+        return favoriteMapper.countByExample(example);
     }
 }

@@ -20,20 +20,20 @@ public class PostModel {
     private int userId;
 
     public PostModel(Post post, PostContent postContent, List<Tag> tags, User user) {
-        this.postingId = post.getPosterId();
+        this.postingId = post.getPostId();
         this.title = post.getTitle();
         this.content = postContent.getContent();
-        this.pic = "pic/1.jpg";
+        this.pic = "pic/" + (postingId % 15 + 1) + ".jpg";
         this.views = post.getViews();
         this.stars = post.getStarNum();
-        topic = new ArrayList<TagModel>();
+        this.topic = new ArrayList<TagModel>();
         int size = tags.size();
         for (int i = 0; i < size; i++) {
             TagModel tagModel = new TagModel(tags.get(i));
-            topic.add(tagModel);
+            this.topic.add(tagModel);
         }
-        avatar = user.getAvatarUrl();
-        userId = user.getUserId();
+        this.avatar = user.getAvatarUrl();
+        this.userId = user.getUserId();
     }
 
     public PostModel() {}

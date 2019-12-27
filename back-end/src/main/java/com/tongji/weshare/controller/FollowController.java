@@ -21,11 +21,22 @@ public class FollowController {
     @GetMapping("/follow")
     public String newFollow(Integer followedId, Integer followerId) {
         String response;
-        Follow follow = new Follow();
-        follow.setFollowedUserId(followedId);
-        follow.setFollowerId(followerId);
-        int insertFollow = followService.newFollow(follow);
-        ResponseModel responseModel = new ResponseModel(200);
+        ResponseModel responseModel = new ResponseModel(201);
+
+        FollowExample followExample = new FollowExample();
+        FollowExample.Criteria criteria = followExample.createCriteria();
+        criteria.andFollowedUserIdEqualTo(followedId);
+        criteria.andFollowerIdEqualTo(followerId);
+        long count = followService.countFollows(followExample);
+
+        if (count == 0) {
+
+            Follow follow = new Follow();
+            follow.setFollowedUserId(followedId);
+            follow.setFollowerId(followerId);
+            int insertFollow = followService.newFollow(follow);
+            responseModel.setResponse(200);
+        }
         response = JSON.toJSONString(responseModel);
         return response;
     }

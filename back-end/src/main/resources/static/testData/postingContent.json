@@ -1,0 +1,35 @@
+{
+  "posting": {
+    "avatar": "avatar/1.jpg",
+    "title": "posting title",
+    "topic": ["topic 1", "topic 2", "topic 3"],
+    "posterId": 111
+  },
+  "list": [
+    {
+      "time": "2019/12/10 14:53:12.00",
+      "content": "This is the content",
+      "pic": "pic/1.jpg"
+    },
+    {
+      "time": "2019/12/10 14:53:13.11",
+      "content": "This is the content",
+      "pic": "pic/2.jpg"
+    },
+    {
+      "time": "2019/12/10 14:53:14.22",
+      "content": "This is the content",
+      "pic": "pic/3.jpg"
+    },
+    {
+      "time": "2019/12/10 14:53:15.33",
+      "content": "This is the content",
+      "pic": "pic/4.jpg"
+    },
+    {
+      "time": "2019/12/10 14:53:16.44",
+      "content": "This is the content",
+      "pic": "pic/5.jpg"
+    }
+  ]
+}

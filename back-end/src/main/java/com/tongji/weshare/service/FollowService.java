@@ -25,4 +25,8 @@ public class FollowService {
     public int deleteFollow(FollowExample example) {
         return followMapper.deleteByExample(example);
     }
+
+    public long countFollows(FollowExample example) {
+        return followMapper.countByExample(example);
+    }
 }

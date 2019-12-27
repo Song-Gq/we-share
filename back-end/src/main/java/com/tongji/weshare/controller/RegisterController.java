@@ -8,6 +8,8 @@ import com.tongji.weshare.service.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Base64;
 import java.util.List;
 
 @RestController
@@ -19,8 +21,10 @@ public class RegisterController {
     }
 
     @GetMapping("/register")
-    public String register(String email, String userName, String password) {
+    public String register(String email, String userName, String password) throws UnsupportedEncodingException {
         String response;
+        byte[] unbase = Base64.getDecoder().decode(password);
+        String unbasePassword = new String(unbase, "UTF-8");
         UserExample userExample = new UserExample();
         UserExample.Criteria criteria = userExample.createCriteria();
         criteria.andEmailEqualTo(email);
@@ -30,7 +34,7 @@ public class RegisterController {
             User user = new User();
             user.setEmail(email);
             user.setUsername(userName);
-            user.setPassword(password);
+            user.setPassword(unbasePassword);
             user.setAvatarUrl("avatar/1.jpg");
             UserExample userExample1 = new UserExample();
             UserExample.Criteria criteria1 = userExample1.createCriteria();

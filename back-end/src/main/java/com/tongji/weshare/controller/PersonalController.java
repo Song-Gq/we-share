@@ -44,7 +44,7 @@ public class PersonalController {
     }
 
     @GetMapping("changeInfo")
-    public String changeInfo(Integer userId, String avatarUrl, String userName,
+    public String changeInfo(Integer userId, String avatar, String userName,
                              Byte gender, String email, String introduction) {
         String response;
         UserExample userExample = new UserExample();
@@ -56,8 +56,12 @@ public class PersonalController {
             UserExample userExample1 = new UserExample();
             UserExample.Criteria criteria1 = userExample1.createCriteria();
             criteria1.andEmailEqualTo(email);
+            String avatarUrl = "avatar/"+ avatar;
+            List<User> users1 = userService.getUsers(userExample);
+            boolean same = users1.get(0).getUserId() == userId;
+
             long count = userService.countUsers(userExample1);
-            if (count == 0) {
+            if (count == 0 || same) {
                 User user = new User();
                 user.setAvatarUrl(avatarUrl);
                 user.setUserId(userId);
@@ -73,10 +77,10 @@ public class PersonalController {
         return response;
     }
 
-    @GetMapping(value = "/personalPage", params = {"userId", "searchType", "page"})
-    public String getMy(Integer userId, @NotNull String searchType, Integer page) {
+    @GetMapping(value = "/personalPage", params = {"userId", "type", "page"})
+    public String getMy(Integer userId, @NotNull String type, Integer page) {
         String response = "";
-        if (searchType.equals("myFavorite")) {
+        if (type.equals("myFavorite")) {
             FavoriteExample favoriteExample = new FavoriteExample();
             FavoriteExample.Criteria criteriaFa = favoriteExample.createCriteria();
             criteriaFa.andUserIdEqualTo(userId);
@@ -111,7 +115,7 @@ public class PersonalController {
             PostListModel postListModel = new PostListModel(list);
             response = JSON.toJSONString(postListModel);
         }
-        else if (searchType.equals("myPost")) {
+        else if (type.equals("myPost")) {
             PostExample postExample = new PostExample();
             PostExample.Criteria criteriaPost = postExample.createCriteria();
             criteriaPost.andPosterIdEqualTo(userId);
@@ -143,7 +147,7 @@ public class PersonalController {
             PostListModel postListModel = new PostListModel(list);
             response = JSON.toJSONString(postListModel);
         }
-        else if (searchType.equals("myFocus")) {
+        else if (type.equals("myFocus")) {
             FollowExample followExample = new FollowExample();
             FollowExample.Criteria criteriaFo = followExample.createCriteria();
             criteriaFo.andFollowerIdEqualTo(userId);

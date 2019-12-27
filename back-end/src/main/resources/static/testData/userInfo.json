@@ -1,0 +1,9 @@
+{
+  "userInfo": {
+    "avatar": "avatar/4.jpg",
+    "userName": "commonjs",
+    "email": "lll@lll.com",
+    "gender": 0,
+    "introduction": "Your local changes would be overwritten by merge.Commit, stash or revert them to proceed. View them.Module resolution rules from webpack.config.js are now used for coding assistance."
+  }
+}

@@ -10,6 +10,7 @@ import com.tongji.weshare.model.TagModel;
 import com.tongji.weshare.service.PostService;
 import com.tongji.weshare.service.TagService;
 import com.tongji.weshare.service.UserService;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -43,6 +44,7 @@ public class IndexController {
             int size = posts.size();
             List<PostModel> list = new ArrayList<PostModel>();
             for (int i = 0; i < size; i++) {
+                System.out.println();
                 int postId = posts.get(i).getPostId();
                 int posterId = posts.get(i).getPosterId();
                 PostContentExample postContentExample = new PostContentExample();
@@ -89,7 +91,7 @@ public class IndexController {
             }
             Collections.sort(list1);
 
-            int pageLimit = 2;
+            int pageLimit = 50;
             int maxPage = (int)Math.ceil((double) list1.size() / pageLimit);
             if (page > maxPage)
                 page = maxPage;

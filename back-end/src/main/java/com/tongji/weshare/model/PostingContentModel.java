@@ -8,6 +8,8 @@ import java.util.Date;
 public class PostingContentModel {
     private String time;
     private String content;
+    private Integer postingId;
+    private Integer floor;
     private String pic;
 
     public PostingContentModel(PostContent postContent) {
@@ -15,7 +17,10 @@ public class PostingContentModel {
         SimpleDateFormat dateFormat = new SimpleDateFormat();
         dateFormat.applyPattern("yyyy-MM-dd HH:mm:ss");
         this.time = dateFormat.format(postContent.getTime());
-        this.pic = "pic/1.jpg";
+        this.postingId = postContent.getPostId();
+        this.floor = postContent.getFloor();
+        int num = (postingId + floor - 1) % 15 + 1;
+        this.pic = "pic/" + num + ".jpg";
     }
 
     public void setPic(String pic) {

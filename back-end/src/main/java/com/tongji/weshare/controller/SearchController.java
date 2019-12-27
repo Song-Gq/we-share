@@ -48,8 +48,9 @@ public class SearchController {
         else if (type.equals("topic")) {
             TagExample tagExample = new TagExample();
             TagExample.Criteria criteria = tagExample.createCriteria();
+            tagExample.setDistinct(true);
             criteria.andTagNameLike("%"+text+"%");
-            PageHelper.startPage(page, 5);
+            PageHelper.startPage(page, 50);
             List<Tag> tags = tagService.getTags(tagExample);
             int size = tags.size();
             List<TagModel> list = new ArrayList<TagModel>();

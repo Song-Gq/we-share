@@ -3,11 +3,11 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`
 (
     user_id      INT         NOT NULL AUTO_INCREMENT,
-    username     VARCHAR(30) NOT NULL,
+    username     VARCHAR(50) NOT NULL,
     password     VARCHAR(30) NOT NULL,
     avatar_url   TINYTEXT,
-    email        VARCHAR(30) NOT NULL,
-    introduction VARCHAR(50),
+    email        VARCHAR(30) NOT NULL UNIQUE,
+    introduction VARCHAR(100),
     gender       TINYINT     NOT NULL DEFAULT 0,
     PRIMARY KEY (`user_id`)
 );
@@ -16,11 +16,11 @@ DROP TABLE IF EXISTS `post`;
 
 CREATE TABLE `post`
 (
-    post_id   INT         NOT NULL AUTO_INCREMENT,
-    poster_id INT         NOT NULL,
-    title     VARCHAR(30) NOT NULL,
-    star_num  INT         NOT NULL DEFAULT 0,
-    views     INT         NOT NULL DEFAULT 0,
+    post_id   INT          NOT NULL AUTO_INCREMENT,
+    poster_id INT          NOT NULL,
+    title     VARCHAR(100) NOT NULL,
+    star_num  INT          NOT NULL DEFAULT 0,
+    views     INT          NOT NULL DEFAULT 0,
     PRIMARY KEY (`post_id`),
     FOREIGN KEY (`poster_id`) REFERENCES user (`user_id`) ON DELETE CASCADE
 );
@@ -41,9 +41,10 @@ DROP TABLE IF EXISTS `tag`;
 
 CREATE TABLE `tag`
 (
-    tag_name VARCHAR(30) NOT NULL,
+    tag_name VARCHAR(50) NOT NULL,
     post_id  INT         NOT NULL,
-    PRIMARY KEY (`tag_name`, `post_id`)
+    PRIMARY KEY (`tag_name`, `post_id`),
+    FOREIGN KEY (`post_id`) REFERENCES post (`post_id`) ON DELETE CASCADE
 );
 
 DROP TABLE IF EXISTS `question`;
