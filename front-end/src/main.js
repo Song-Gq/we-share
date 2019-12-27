@@ -14,6 +14,7 @@ import Question from "@/components/Question";
 import Answer from "@/components/Answer";
 import PersonalList from "@/components/PersonalList";
 import ChangeInfo from "@/components/ChangeInfo";
+import VueCookies from 'vue-cookies'
 
 const NotFound = { template: '<p>Page not found</p>' }
 
@@ -51,11 +52,23 @@ Router.prototype.push = function push(location, onResolve, onReject) {
     return originalPush.call(this, location).catch(err => err)
 }
 
+// var hasLogin = false
+// var userId = -1
+
 Vue.config.productionTip = false
 Vue.use(ViewUI, {
 });
 Vue.use(VueRouter);
+// Vue.prototype.$hasLogin = hasLogin
+// Vue.prototype.$userId = userId
+Vue.use(VueCookies)
 
 new Vue({
-    router
+    router,
+    data(){
+        return{
+            hasLogin:false,
+            userId:-1
+        }
+    }
 }).$mount('#app')

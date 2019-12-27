@@ -1,19 +1,15 @@
 {
   "list": [
     {
-      "postingId": 67811910,
-      "title": "searchPosting.json",
-      "content": "This is the content, this is the content, this is the content, this is the content.",
-      "pic": "pic/1.jpg",
+      "postingId": 22222222222,
+      "title": "popPosting.json",
       "views": 123,
       "stars": 123,
       "topic": [
         {"tagId": 5, "tagName": "Topic1"},
         {"tagId": 6, "tagName": "Topic2"},
         {"tagId": 1, "tagName": "Topic3"}
-      ],
-      "avatar": "avatar/1.jpg",
-      "userId": 12345
+      ]
     },
     {
       "postingId": 67822910,
@@ -26,9 +22,7 @@
         {"tagId": 5, "tagName": "Topic1"},
         {"tagId": 6, "tagName": "Topic2"},
         {"tagId": 1, "tagName": "Topic3"}
-      ],
-      "avatar": "avatar/2.jpg",
-      "userId": 1232222222245
+      ]
     },
     {
       "postingId": 63378910,
@@ -41,9 +35,7 @@
         {"tagId": 5, "tagName": "Topic1"},
         {"tagId": 6, "tagName": "Topic2"},
         {"tagId": 1, "tagName": "Topic3"}
-      ],
-      "avatar": "avatar/3.jpg",
-      "userId": 1233345
+      ]
     },
     {
       "postingId": 64478910,
@@ -56,9 +48,7 @@
         {"tagId": 5, "tagName": "Topic1"},
         {"tagId": 6, "tagName": "Topic2"},
         {"tagId": 1, "tagName": "Topic3"}
-      ],
-      "avatar": "avatar/4.jpg",
-      "userId": 121144345
+      ]
     },
     {
       "postingId": 67891550,
@@ -71,9 +61,7 @@
         {"tagId": 5, "tagName": "Topic1"},
         {"tagId": 6, "tagName": "Topic2"},
         {"tagId": 1, "tagName": "Topic3"}
-      ],
-      "avatar": "avatar/5.jpg",
-      "userId": 126655345
+      ]
     }
   ]
 }

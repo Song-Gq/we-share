@@ -15,15 +15,13 @@ const dataHandler = data => {
 };
 
 export default {
-    get(searchType, page, callback) {
+    get(questionId, answerPage, callback) {
         http.request({
-            url: baseURL == 'testData' ? (
-                searchType == 'posting' ? '/popPosting.json' : '/popTopic.json'
-            ) : '/index',
+            url: baseURL == 'testData' ? 'postingAnswer.json' : '/posting/answer',
             method: 'GET',
             params: {
-                type: searchType,
-                page: page
+                questionId: questionId,
+                answerPage: answerPage
             }
         }).then(response => {
             // window.console.log(response.data)
